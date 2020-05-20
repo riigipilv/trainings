@@ -22,7 +22,7 @@ CI eelduseks on keskne koodihoidla, olgu selleks siis github.com, bitbucket.org 
 4. Rakenduse valmispakettide hoiustamise keskkond (näiteks Docker Hub)
 5. Keskkond, kuhu tarkvara paigaldada (Docker võimekusega keskkond, näiteks Kubernetes)
 
-###Käesoleva praktikaülesande jaoks oleme valinud järgmised lahendused:
+### Käesoleva praktikaülesande jaoks oleme valinud järgmised lahendused:
 
 1. Gitlab (GIT)
 2. Gitlab (täidab nii CI kui CD rolli)
@@ -35,7 +35,7 @@ Praktikaülesande sisuks on luua “Hello world” rakendus Go programmeerimiske
 
 Teine samm on paigaldada rakendus Kubernetese keskkonda, nii et see oleks konkreetse veebiaadressi pealt kättesaadav. Kubernetesesse paigaldame rakenduse standartsete vahenditega. 
 
-###Eeldused: 
+### Eeldused: 
 
 1. Git käsurea utiliit või graafiline vahend nagu Atlassian Sourcetree
 2. Sobilik koodieditor pipelinede ja koodi muutmiseks, sobib hästi VS Studio Code
