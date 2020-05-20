@@ -12,7 +12,7 @@ CI eelduseks on keskne koodihoidla, olgu selleks siis github.com, bitbucket.org 
 
 Kokkuvõttes esimese kahe protsessi puhul on mõeldav, et "DEV" ja "OPS" on lahus meeskonnad ning toimub nö paketi üleandmine paigaldamiseks, kuid reeglina soovitakse testkeskkonda juba automatiseeritud paigaldust teha, sest klient tahab kiireid tulemusi näha. Samas toodangusse paigaldus võiks olla testiga ühetaoline, et ei tekiks vigu keskkondade erinevusest, seega muudab see devops meeskonna olemasolu selle eduka rakendamise eelduseks. 
 
-Täpsemalt võib lugeda CI/CD või Devops kohta näiteks Atlassiani lehelt: https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment või https://about.gitlab.com/blog/2019/06/12/devops-team-structure/ 
+Täpsemalt võib lugeda CI/CD ja Devops kohta näiteks https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment või https://about.gitlab.com/blog/2019/06/12/devops-team-structure/ 
 
  CI/CD-d tervikuna nimetatakse ka tehnilises vaates "pipeline"-ks, mis on siis koodi või muul deklaratiivsel kujul (näiteks yaml) defineeritud protsess, mis määratleb kuidas, milliste tehnoloogiatega ja mis kujul rakenduse lähtekood liigub erinevate keskkondade ja töövahendite vahel.
  
@@ -22,7 +22,7 @@ Täpsemalt võib lugeda CI/CD või Devops kohta näiteks Atlassiani lehelt: http
 
 1. Lähtekoodi hoidla, soovitavalt GIT põhine
 2. Lähtekoodi ehitamise, testimise, pakendamise ja paigaldamise  keskkond, mis suudab hakkama saada erinevate programmerimiskeelte ja tehnoloogiatega (näiteks Gitlab, Jenkins, Atlassian Bamboo)
-3. Sõltuvuste pakkumise keskkond (üks koht kus saab kätte erinevaid teeke mida näiteks Maven,Pip,Gradle,Go,npm vms tehnoloogiad vajavad)
+3. Sõltuvuste repositoorium (üks koht kus saab kätte erinevaid teeke mida näiteks Maven,Pip,Gradle,Go,npm vms tehnoloogiad vajavad)
 4. Rakenduse valmispakettide hoiustamise keskkond (näiteks Docker Hub)
 5. Keskkond, kuhu tarkvara paigaldada (Docker võimekusega keskkond, näiteks Kubernetes)
 
