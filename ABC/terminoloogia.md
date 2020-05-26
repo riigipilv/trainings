@@ -1,6 +1,6 @@
 # Pod
 
-Pod on väikseim ja olulisim kubernetese clustri üksus. Pod koosneb ühest või mitmest dockeri konteinerist, kus igaühel neist on oma unikaalne klastri sisene IP aadress mis võimaldab rakendusel kasutada porte konfliktidevabalt.
+Pod on väikseim ja olulisim kubernetese klastri üksus. Pod koosneb ühest või mitmest dockeri konteinerist, kus igaühel neist on oma unikaalne klastri sisene IP aadress mis võimaldab rakendusel kasutada porte konfliktidevabalt.
 
 # Replica Set
 
