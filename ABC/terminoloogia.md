@@ -10,6 +10,7 @@ Tegemist on Kubernetese kontrolleriga mis kindlustab selle, et teatud labelitega
 
 Deployments võimaldab defineerida pode, seadistada neile labeleid ning määrata korraga käivitatavate podide arvu (Replica Set). Allolev deployment tekitab näiteks kolm nginxi podi
 
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,6 +32,7 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+```
 
 # Configmap
 
@@ -45,6 +47,7 @@ Labelid ja selectorid on peamine rühmitamismehhanism Kuberneteses. See määrab
 Vaikimisi on podid kättesaadavad vaid klastri siseselt. Service on objekt mis teeb sobivate siltidega (label) varustatud podide kogumiku label selectorite abil kättesaadavaks ka klastrist väjaspool ning pakub võrgukoormuse jaotajat, mis toimib round-robin algoritmil ja jagab koormuse podide vahel ühtlaselt. Näiteks saame teha port 80 pealt
 kättesaadavaks  podid mis kuulavad TCP porti 9376 ning varustatud labeliga app=MyApp
 
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -56,11 +59,13 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 9376
+```
 
 # Ingress 
 
 Ingressi ülesandeks on siduda FQDN domeene teenustega (services). Allolev näide seob näiteks service nimega "my-service" domeeniga test.zoo.ee
 
+```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -76,6 +81,7 @@ spec:
         backend:
           serviceName: my-service
           servicePort: 80
+```
 
 # Volume 
 
@@ -87,7 +93,9 @@ toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jp
 
 Tegemist on virtuaalse clustriga, mis mõeldud rakenduste kubernetese sees üksteisest eraldamiseks. Olemasolevate namespacede nimekirja näeb käsuga:
 
+```
 kubectl get namespace
+```
 
 # Job 
 
