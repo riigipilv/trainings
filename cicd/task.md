@@ -9,7 +9,7 @@
 * Klooni projekt endale personaalsesse arvutisse: 
 * * git clone https://koodivaramu.eesti.ee/riigipilv-webinar/sinuprojekt.git
 
-Igal pool jälgida et oleks enda korrektne projektinimi seadistatud!
+Igal pool jälgida et oleks enda korrektne projekti nimi seadistatud!
 
 ### Koodi ja testi kirjutamine
 
@@ -151,12 +151,14 @@ Igal projektil tekib automaatselt oma isilik Docker repositoorium, kuhu andmed l
 ### Kubernetese ja suitsutesti sammude lisamine
 
 Lisa juurde stages sektsiooni alla kaks täiendavat rida (deploy ja smoke). Samuti lisa järgne kood oma gitlab-ci.yml faili.
-Siin tekib kaks täiendavat sammu meie CI/CD protsessi, millest esimene on Kubernetesesse paigaldus ja teine on triviaalne
-suitsutest, mis väljaspoolt süsteemi kontrollib kas rakendus vastab. Mõlema sammu puhul kasutame erinevat Docker konteinerit,
-esimene sisaldab vajalike tööriistu kubernetesega suhtlemiseks ja teine curl-i kasutamiseks. Alati võib endale
-universaalse konteineri ise luua, kus kõik tööriistad on koos. Kubernetesega liidestamiseks vajalikud keskkonnamuutujad,
-annab meile Gitlab keskkond automaatselt, sest oleme keskse klastri ära seadistanud antud harjutuse jaoks. Igaühel
-tekib automaatselt oma Kubernetese nimeruum, kuhu vastavad rakenduse komponendid paigaldatakse.
+Siin tekib kaks täiendavat sammu meie CI/CD protsessi, millest esimene on Kubernetesesse paigaldus ja teine on triviaalne suitsutest, mis väljaspoolt süsteemi kontrollib kas rakendus vastab.
+ 
+Mõlema sammu puhul kasutame erinevat Docker konteinerit, esimene sisaldab vajalike tööriistu kubernetesega suhtlemiseks ja teine curl-i kasutamiseks. Alati võib endale
+universaalse konteineri ise luua, kus kõik tööriistad on koos. 
+
+Kubernetesega liidestamiseks vajalikud keskkonnamuutujad, annab meile Gitlab keskkond automaatselt, sest oleme keskse klastri ära seadistanud antud harjutuse jaoks. 
+
+
 
 ```
 deploy_kubernetes:
@@ -166,11 +168,11 @@ deploy_kubernetes:
   stage: deploy
   image: registry.gitlab.com/gitlab-examples/kubernetes-deploy
   script:
-    - kubectl config set-cluster "k8s-training-cicd-temp" --server="$KUBE_URL"
-    - kubectl config set-credentials "k8s-training-cicd" --token="$KUBE_TOKEN_TEMP"
-    - kubectl config set-context --current --cluster="k8s-training-cicd-temp" --user="k8s-training-cicd" --namespace="$CI_PROJECT_NAME"
+    - sed -i "s~__NS__~$KUBE_NAMESPACE~g" namespace.yml
     - sed -i "s~__IMAGE__~$CI_REGISTRY_IMAGE:latest~g" deployment.yml
     - sed -i "s~__HOST__~$CI_PROJECT_NAME.$BASE_DOMAIN~" ingress.yml
+    - kubectl apply -f namespace.yml
+    - kubectl config set-context --current --namespace="$KUBE_NAMESPACE"
     - kubectl apply -f deployment.yml
     - kubectl apply -f service.yml
     - kubectl apply -f ingress.yml
@@ -185,6 +187,16 @@ smoke_test:
 ```
 
 ### Kubernetes spetsiifiliste konfiguratsioonifailide loomine rakenduse paigaldamiseks
+
+Loo fail namespace.yml, selle abil me loome nimeruumi ehk koha, kuhu rakendused paigaldatakse. Tavaliselt on nimeruum juba ette tehtud,
+aga hetkel täieliku automatiseerimise ning ülesande lihtsustamise nimel loome selle ka jooksvalt.
+
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: __NS__
+```
 
 Loo fail deployment.yml, sellega me paigaldame rakenduse konteineritena Kubernetesesse. Oleme lisanud ka siia ka kontrolli,
 et rakenduse käivitumist kontrollib süsteem ka spetsiaalse aadressi kaudu, samuti paigaldame kaks instantsi.
