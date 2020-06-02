@@ -1,0 +1,155 @@
+
+    <!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Kubernetes ABC - LAB 9</title>
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../main.css">
+        <script src="../highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+    <header>
+        <div>
+            <span> Kubernetes ABC - LAB 9</span>
+            <img src="../logo.svg"/>
+        </div>
+    </header>
+    <div class="body"><h3 id="1livelinessandreadiness">1) Liveliness and Readiness</h3>
+<pre><code class="shell language-shell">$ cd ~/9
+</code></pre>
+<p><details class="cmd-file"><summary>liveandready.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: liveandready
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: liveandready
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: liveandready
+  name: liveandready
+spec:
+  replicas: 5
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: liveandready
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: liveandready
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        name: hello
+        resources: {}
+        command:
+        - /bin/sh
+        - '-c'
+        - ' if [ `od -An -N1 -i /dev/urandom` -gt 50 ]; then echo "I am broken" &amp;&amp; sleep 100000; else nginx -g "daemon off;"; fi'
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 5
+
+
+</code></pre>
+</details></p>
+<p>This is a deployment that most of the time launches a broken pod - the nginx service never starts up on it. <br/>
+But the container has a readiness and liveliness probe!</p>
+<p>It will be ready when it responds to GET / after 3 seconds of start up and then every second - participates in the service if it is ready. <br/>
+It is live when GET / gives answers 10 seconds after start up and then every 5 seconds. It also needs to fail 3 times in a row before it is failed. If it fails the container is restarted.</p>
+<p>Eventually all pods should come up as healthy!</p>
+<p>From the last lab you should stil have <strong>client</strong> pod. If you don't have it for some reason, use kubectl create -f ~/6/client.yaml <br/>
+Please make sure you do have the <strong>client</strong> pod.</p>
+<p>Check that you have the client pod.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p>In order to better monitor the pods and services a helper script is added to this lab.</p>
+<p>It is made of two parts:</p>
+<p><strong>how_many_pods.sh</strong> - will be copied to the client pod. It will do 50 HTTP requests to <strong>liveandready</strong> service and give back a list of pods that answered and how many times. <br/>
+<strong>monitor.sh</strong> - will copy the how_many_pods.sh to the client pod and then execute it until it sees all 5 pods giving answers. It will also show get pods and service endpoints.</p>
+<p>Inspect the scripts</p>
+<p><details class="cmd-file"><summary>how_many_pods.sh <span class="show-text">&plus;</span></summary><pre><code class="sh language-sh">#!/bin/bash
+
+i=0
+while [ $i -lt 50 ]
+do
+  curl -s liveandready | grep "Server name"
+  let i++
+done | sort | uniq -c
+
+
+</code></pre>
+</details></p>
+<p><details class="cmd-file"><summary>monitor.sh <span class="show-text">&plus;</span></summary><pre><code class="sh language-sh">#!/bin/bash
+kubectl cp how_many_pods.sh client:/how_many_pods.sh
+
+
+
+servers=0
+while [ $servers -lt 5 ]
+do
+   echo "###########Web Requests#############"
+   kubectl exec -it client /how_many_pods.sh &gt; ./result.txt
+   echo "50 requests divided on these pods:"
+   cat ./result.txt
+   servers=`cat ./result.txt | wc -l`
+   echo "-----------Pods---------------------"
+   kubectl get pods 
+   echo "-----------Endpoints IPs------------"
+   kubectl describe ep liveandready | grep "Addresses:\|NotReadyAddresses:"
+   if [ $servers -lt 5 ]
+   then
+     sleep 10
+   fi
+done 
+
+
+</code></pre>
+</details></p>
+<p>Launch the liveandready service and deployment.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl create -f liveandready.yaml
+</code></pre>
+</details></p>
+<p>Run the monitoring script:</p>
+<pre><code class="shell language-shell">$ ./monitor.sh
+</code></pre>
+<p>Observe how the pods are changing.</p>
+<p>Some pods will not become ready since readiness fails and after some time the liveliness probe kicks in and restarts the container. <br/>
+If one container in a pod is not ready, then the entire pods is not ready.<br/>
+A pod has to be ready to take part in a service.</p>
+<p>If a pod has multiple containers, then only the container that has the failing liveliness probe gets restarted.</p>
+<p>Health probes are executed from the <strong>worker node</strong> the pod is running on, not the master.<br/>
+But the endpoints in a service depend on the master's API - <strong>if the master is down then the services are not changed</strong>.</p>
+<h3 id="2cleanupthelab">2) Clean up the lab</h3>
+<pre><code class="shell language-shell">$ kubectl delete deployment --all
+$ kubectl delete svc --all
+</code></pre></div><script src="../main.js"></script></body></html>

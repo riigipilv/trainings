@@ -1,0 +1,203 @@
+
+    <!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Kubernetes ABC - LAB 6</title>
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../main.css">
+        <script src="../highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+    <header>
+        <div>
+            <span> Kubernetes ABC - LAB 6</span>
+            <img src="../logo.svg"/>
+        </div>
+    </header>
+    <div class="body"><h3 id="1letscreatetwodeploymentsandoneclientpod">1) Let's create two Deployments and one client pod.</h3>
+<pre><code class="shell language-shell">$ kubectl create deployment a --image=nginxdemos/hello:plain-text
+$ kubectl create deployment b --image=nginxdemos/hello:plain-text
+</code></pre>
+<p>Scale both deployments up to 3.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl scale deployment a --replicas=3
+</code></pre>
+</details></p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl scale deployment b --replicas=3
+</code></pre>
+</details></p>
+<pre><code class="shell language-shell">$ cd ~/6
+</code></pre>
+<p>Inspect client.yaml</p>
+<p><details class="cmd-file"><summary>client.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+spec:
+  containers:
+  - name: linux
+    image: ubuntu
+    command: ['sh', '-c', 'apt update &amp;&amp; apt -y install procps net-tools wget curl iputils-ping dnsutils &amp;&amp; sleep 360000']
+
+</code></pre>
+</details></p>
+<pre><code class="shell language-shell">$ kubectl create -f client.yaml
+$ kubectl get pods -o wide
+</code></pre>
+<p>We have now two deployments that run nginx on port 80 on each pod.</p>
+<h3 id="2clusteripservice">2) ClusterIP service</h3>
+<p>You can create a service by using kubectl expose.</p>
+<pre><code class="shell language-shell">$ kubectl expose deployment/a --port 80
+$ kubectl get svc -o wide
+</code></pre>
+<p>Notice the Cluster IP. It is from a different range than Pods. </p>
+<pre><code class="shell language-shell">$ kubectl get ep -o wide
+$ kubectl get pods -o wide
+</code></pre>
+<p>Notice that the <strong>ENDPOINTS</strong> are the same IP-s as the pods belonging to that service. <br/>
+You can think of the endpoint as the backend pool of a loadbalancer.</p>
+<p>Use the client pod to access this service.</p>
+<pre><code class="shell language-shell">$ kubectl exec -it client bash
+# cat /etc/resolv.conf
+</code></pre>
+<p>Notice the nameserver IP and search path.</p>
+<pre><code class="shell language-shell"># nslookup a
+# curl a
+</code></pre>
+<p>Repeat the curl command several times and notice the <strong>Server name</strong> and <strong>Server address</strong>.</p>
+<p>This is the pods nginx giving you information about itself.<br/>
+You should also notice that the loadbalancing is random - not round-robin.</p>
+<pre><code class="shell language-shell"># exit
+</code></pre>
+<p>Another way to create a service is with a yaml file.</p>
+<p><details class="cmd-file"><summary>cluster_ip_svc.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: ngninxa-clusterip
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: b
+
+</code></pre>
+</details></p>
+<p>Inspect the file. Please pay attention to the <strong>selector</strong></p>
+<pre><code class="shell language-shell">$ kubectl create -f cluster_ip_svc.yaml
+$ kubectl get svc -o wide
+</code></pre>
+<p>Notice that each service has a unique IP address.</p>
+<pre><code class="shell language-shell">$ kubectl get ep -o wide
+$ kubectl get pods --show-labels
+</code></pre>
+<p>The service chooses the pods based on the label selector; all the deployment B pods have a label <strong>app=b</strong>. <br/>
+This is how a service knows what pods belong to it. A service does not know anything about deployments.</p>
+<p>Service only deals with pods and endpoints - it does not care how the pods were created.<br/>
+Also, the service name can be what you want - common practice is to keep deployment names same as service names.</p>
+<pre><code class="shell language-shell">$ kubectl exec -it client bash
+# nslookup ngninxa-clusterip
+# curl ngninxa-clusterip
+</code></pre>
+<p>Repeat curl many times. You will get the response of nginxa pods.</p>
+<pre><code class="shell language-shell"># exit
+</code></pre>
+<h3 id="3multipledeploymentsportsandoneservice">3) Multiple deployments, ports and one service</h3>
+<pre><code class="shell language-shell">$ cd ~/6
+</code></pre>
+<p><details class="cmd-file"><summary>two_deploys_one_svc.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: multideploy
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: alternative
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    myappname: myapp
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: aaa-nginx
+  name: aaa
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: aaa-nginx
+  template:
+    metadata:
+      labels:
+        app: aaa-nginx
+        myappname: myapp
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        imagePullPolicy: Always
+        name: hello
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bbb-nginx
+  name: bbb
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: bbb-nginx
+  template:
+    metadata:
+      labels:
+        app: bbb-nginx
+        myappname: myapp
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        imagePullPolicy: Always
+        name: hello
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 3
+
+
+</code></pre>
+</details></p>
+<p>We create one service that listens on port 80 and 8080. The service uses the selector <strong>myappname: myapp</strong>. <br/>
+We create deployment <strong>aaa</strong> and <strong>bbb</strong>. They have their own deployment selector as <strong>app: aaa</strong> and <strong>app: bbb</strong> so the deployment knows what pods belong to the deployment.</p>
+<p>In the pods template both <strong>aaa</strong> and <strong>bbb</strong> have an additional label <strong>myappname: myapp</strong> - this label will be on <strong>aaa</strong> and <strong>bbb</strong> deployments.</p>
+<pre><code class="shell language-shell">$ kubectl create -f two_deploys_one_svc.yaml
+$ kubectl get svc multideploy  -o wide
+</code></pre>
+<p>Notice it has now two ports. Also notice the selector label.</p>
+<pre><code class="shell language-shell">$ kubectl describe ep multideploy
+$ kubectl get pods --show-labels -l myappname=myapp
+$ kubectl exec -it client bash
+# curl multideploy
+</code></pre>
+<p>Repeat the curl command many times and check the Pod name that is responding.</p>
+<pre><code class="shell language-shell"># curl multideploy:8080
+</code></pre>
+<p>The backend pod listens only on port 80, you can do port mapping with services too. <br/>
+You will see in the Server address field; the pod is on port 80.</p>
+<pre><code class="shell language-shell"># exit
+</code></pre>
+<h3 id="6cleanupthelab">6) Clean up the lab</h3>
+<pre><code class="shell language-shell">$ kubectl delete deployment --all
+$ kubectl delete svc --all
+</code></pre></div><script src="../main.js"></script></body></html>

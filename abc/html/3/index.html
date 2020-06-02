@@ -1,0 +1,49 @@
+
+    <!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Kubernetes ABC - LAB 3</title>
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../main.css">
+        <script src="../highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+    <header>
+        <div>
+            <span> Kubernetes ABC - LAB 3</span>
+            <img src="../logo.svg"/>
+        </div>
+    </header>
+    <div class="body"><h3 id="1logintorancher">1) Log in to rancher</h3>
+<p>Go to https://k8s-test.riigipilv.ee/
+The username should be fistname.lastname and password is the e-mail address you used for registering to this course.</p>
+<h3 id="2entertheconsoleofabcproject">2) Enter the console of ABC project</h3>
+<p>Click on "k8s-training-abc" and then click on "Launch kubectl".</p>
+<p>If you already have kubectl installed on your computer and are familiar with it, you can also get the Kubeconfig file and do the labs from local machine and not use the web console.</p>
+<h3 id="3checkyourcurrentcontext">3) Check your current context</h3>
+<p>A context in kubectl is a combination of Kubernetes cluster (API) and client authentication (username/password, certificate/key or token).</p>
+<p>For example, you could have admin and regular user and 1 cluster.
+You could then have two contexts - one where you are the admin in the cluster, another where you are the regular user.</p>
+<p>In a similar way you could have 1 authentication but two clusters. 
+At a time, you are active in one context - but it is easy to switch between them.</p>
+<pre><code class="shell language-shell">$ kubectl config get-contexts
+</code></pre>
+<p>Currently you have defined 1 context.</p>
+<p>This command simply shows what is in the file  ~/.kube/config</p>
+<pre><code class="shell language-shell">$ cat ~/.kube/config
+</code></pre>
+<h3 id="4createanamespace">4) Create a namespace</h3>
+<p>Replace <firstname-lastname> with your name. You can use something other than your name too, but it will make it harder for us to help you if you need it.</p>
+<pre><code class="shell language-shell">$ kubectl create ns &lt;firstname-lastname&gt;
+</code></pre>
+<h3 id="5switchyourcontexttothatnamespace">5) Switch your context to that namespace</h3>
+<p>In order to have our own corner for the labs we will use our own namespace.</p>
+<pre><code class="shell language-shell">$ kubectl config set-context --current --namespace=&lt;firstname-lastname&gt;
+$ kubectl config get-contexts
+</code></pre>
+<h3 id="6downloadandextractthelabfiles">6) Download and extract the lab files.</h3>
+<pre><code class="shell language-shell">$ curl -o abc.tar.gz http://abc.entigo.dev/abc.tar.gz
+$ tar xvzf abc.tar.gz
+</code></pre>
+<p><em>NB: If you close the console, you will have to do steps 5 and 6 again.</em></p></div><script src="../main.js"></script></body></html>

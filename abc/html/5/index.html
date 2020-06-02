@@ -1,0 +1,108 @@
+
+    <!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Kubernetes ABC - LAB 5</title>
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../main.css">
+        <script src="../highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+    <header>
+        <div>
+            <span> Kubernetes ABC - LAB 5</span>
+            <img src="../logo.svg"/>
+        </div>
+    </header>
+    <div class="body"><h3 id="1onewaytocreateadeploymentistousekubectl">1) One way to create a deployment is to use kubectl.</h3>
+<pre><code class="shell language-shell">$ kubectl create deployment nginxa --image=nginxdemos/hello
+</code></pre>
+<p>Just like with pods you have the get and describe command.</p>
+<pre><code class="shell language-shell">$ kubectl get deploy
+$ kubectl describe deploy nginxa
+$ kubectl get pods -o wide
+</code></pre>
+<h3 id="2anotherwayistoprovideyamlorjson">2) Another way is to provide YAML (or json)</h3>
+<p>Inspect the file deployment.yaml</p>
+<p><details class="cmd-file"><summary>deployment.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-yaml
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+
+</code></pre>
+</details></p>
+<pre><code class="shell language-shell">$ cd ~/5
+$ kubectl apply -f deployment.yaml
+</code></pre>
+<p>Check the deployment and pods now created.</p>
+<pre><code class="shell language-shell">$ kubectl get deploy
+$ kubectl get rs
+$ kubectl describe deploy nginx-yaml
+$ kubectl get pods -o wide
+</code></pre>
+<p>Wait until all the pods are in Ready status.<br/>
+You will notice that the second deployment created 3 pods, this is due to the yaml field: <strong>replicas</strong></p>
+<h3 id="3scalingdeployments">3) Scaling deployments:</h3>
+<pre><code class="shell language-shell">$ kubectl scale deployment nginx-yaml --replicas=2
+$ kubectl scale deployment nginxa --replicas=3
+$ kubectl get pods
+$ kubectl get deployment
+</code></pre>
+<p>If you need to disable a deployment, you can scale it to 0 too.</p>
+<pre><code class="shell language-shell">$ kubectl scale deployment nginx-yaml --replicas=0
+</code></pre>
+<p>Check pods and deployment.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get deployment
+</code></pre>
+</details></p>
+<pre><code class="shell language-shell">$ kubectl describe deploy nginx-yaml
+</code></pre>
+<p>Inspect the log messages.</p>
+<h3 id="4deletingadeployment">4) Deleting a deployment</h3>
+<pre><code class="shell language-shell">$ kubectl delete deploy nginx-yaml
+</code></pre>
+<p>Check pods and deployment.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get deployment
+</code></pre>
+</details></p>
+<p>This results in the pods of that deployment being removed as well.</p>
+<h3 id="5deletingapodthatiscreatedbyadeployment">5) Deleting a pod that is created by a deployment.</h3>
+<p>Check pods.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p>Choose one of the pods and delete it, use the pods name from the previous get pods output.</p>
+<pre><code class="shell language-shell">$ kubectl delete pod nginxa-.....-....
+</code></pre>
+<p>Check pods again.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p>You should see that a new replacement pod is launched.</p>
+<h3 id="6cleanupthelab">6) Clean up the lab</h3>
+<pre><code class="shell language-shell">$ kubectl delete deploy --all
+</code></pre></div><script src="../main.js"></script></body></html>

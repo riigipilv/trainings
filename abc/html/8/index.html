@@ -1,0 +1,145 @@
+
+    <!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Kubernetes ABC - LAB 8</title>
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../main.css">
+        <script src="../highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+    <header>
+        <div>
+            <span> Kubernetes ABC - LAB 8</span>
+            <img src="../logo.svg"/>
+        </div>
+    </header>
+    <div class="body"><h3 id="1createconfigmaps">1) Create configmaps</h3>
+<pre><code class="shell language-shell">$ cd ~/8
+</code></pre>
+<p>Inspect the file mariadb-config.yaml</p>
+<p><details class="cmd-file"><summary>mariadb-config.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-envconf
+data:
+  MYSQL_DATABASE: "mydb"
+  MYSQL_USER: "mydbuser"
+
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mysql-config
+data:
+  custom.cnf: |-
+    [mysqld]
+    bind-address     = 0.0.0.0
+    character-set-server=utf8
+    collation-server=utf8_bin
+    default-storage-engine=INNODB
+    max_allowed_packet=256M
+    innodb_log_file_size=1GB
+
+</code></pre>
+</details></p>
+<p>You will see one is files and the other is for environment variables.</p>
+<p>Create configmaps with mariadb-config.yaml files and check configmaps.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl create -f mariadb-config.yaml
+</code></pre>
+</details></p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get configmap
+</code></pre>
+</details></p>
+<h3 id="2secretsarenotprovidedsowewillcreatethemourself">2) Secrets are not provided, so we will create them our self.</h3>
+<pre><code class="shell language-shell">$ kubectl create secret generic mysql-secret --from-literal=MYSQL_PASSWORD=Love --from-literal=MYSQL_ROOT_PASSWORD=Password1
+$ kubectl get secret mysql-secret
+$ kubectl get secret mysql-secret -o yaml
+</code></pre>
+<p>Notice that the value of MYSQL_PASSWORD and MYSQL_ROOT_PASSWORD is base64 encoded.</p>
+<h3 id="3launchmariadb">3) Launch mariadb.</h3>
+<p>Inspect file mariadb.yaml</p>
+<p><details class="cmd-file"><summary>mariadb.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  serviceName: "mariadb"
+  updateStrategy:
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb 
+        envFrom:
+        - configMapRef:
+            name: mysql-envconf
+        - secretRef:
+            name: mysql-secret
+        ports:
+        - containerPort: 3306
+          name: mariadb
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+        - name: config-volume
+          mountPath: /etc/mysql/mariadb.conf.d/custom.cnf
+          subPath: custom.cnf
+        resources:
+          requests:
+            memory: 512M
+          limits:
+            memory: 2096M
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mysql-config
+      - name: data
+        emptyDir: {} 
+
+</code></pre>
+</details></p>
+<p><strong>envFrom:</strong> - include into the containers environment the configmaps and secrets that we created earlier.
+There is also a new type of volume <strong>configMap</strong> - you can treat configmaps as volumes and mount them as files into the containers.</p>
+<p>Create StatefulSet with mariadb.yaml file.</p>
+<pre><code class="shell language-shell">$ kubectl create -f mariadb.yaml
+</code></pre>
+<p>Check pods</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p>Check logs</p>
+<pre><code class="shell language-shell">$ kubectl logs mariadb-0 -f
+</code></pre>
+<p>Wait until the container has started up - then use crtl+c to release the console.</p>
+<pre><code class="shell language-shell">$ kubectl exec -it mariadb-0 bash
+# ls -l /etc/mysql/mariadb.conf.d/
+# cat /etc/mysql/mariadb.conf.d/custom.cnf
+# env | grep MYSQL
+</code></pre>
+<p>Notice that the MYSQL_PASSWORD and MYSQL_ROOT_PASSWORD are not base64 encoded anymore.
+You will also see the env variables from the configmap.</p>
+<pre><code class="shell language-shell"># mysql -u root -p mydb
+MariaDB [mydb]&gt; show variables like 'max_allowed_packet';
+Size here is in bytes. ( 268435456 /1024 /1024 = 256M )
+MariaDB [mydb]&gt; show variables like 'innodb_log_file_size';
+Size here is in bytes. ( 1073741824 /1024 /1024 /1024 = 1G)
+MariaDB [mydb]&gt; quit
+# exit
+</code></pre>
+<p>The custom configuration has been applied too.</p>
+<h3 id="4cleanupthelab">4) Clean up the lab</h3>
+<pre><code class="shell language-shell">$ kubectl delete sts --all
+$ kubectl delete cm --all
+</code></pre></div><script src="../main.js"></script></body></html>

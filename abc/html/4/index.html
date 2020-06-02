@@ -1,0 +1,167 @@
+
+    <!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title> Kubernetes ABC - LAB 4</title>
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../main.css">
+        <script src="../highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+    <header>
+        <div>
+            <span> Kubernetes ABC - LAB 4</span>
+            <img src="../logo.svg"/>
+        </div>
+    </header>
+    <div class="body"><h3 id="1createyourfirstpod">1) Create your first pod</h3>
+<pre><code class="shell language-shell">$ cd ~/4
+</code></pre>
+<p><details class="cmd-file"><summary>first_pod.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: first
+  labels:
+    app: myfirst
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox
+    command: ['sh', '-c', 'echo Hello Kubernetes! &amp;&amp; sleep 180']
+
+</code></pre>
+</details></p>
+<pre><code class="shell language-shell">$ kubectl create -f first_pod.yaml
+$ kubectl get pods
+</code></pre>
+<p>Repeat the last command until you see that your pod is STATUS=Running.</p>
+<pre><code class="shell language-shell">$ kubectl get pods -o wide
+</code></pre>
+<p>The -o wide is often used in get commands to show more information. <br/>
+In case of pods you can additionally see the Pod's IP and the worker node that it is running on.</p>
+<p>In case you need even more details, use <strong>describe</strong> - you can add the pods name to only show a specific pod.</p>
+<pre><code class="shell language-shell">$ kubectl describe pod first
+</code></pre>
+<p>You can also ask for the yaml or json of the pod.</p>
+<pre><code class="shell language-shell">$ kubectl get pod first -o json
+$ kubectl get pod first -o yaml
+</code></pre>
+<p>The yaml and json will contain a lot more information than the initial template that we used.<br/>
+When creating resources, you should only specify fields that you want to change from the default.</p>
+<p>Look at the containers output.</p>
+<pre><code class="shell language-shell">$ kubectl logs first
+</code></pre>
+<p>Similarly to Docker, you can start an interactive pod and you can start pods without any yaml provided.</p>
+<pre><code class="shell language-shell">$ kubectl run -it --rm --generator=run-pod/v1 --image=ubuntu ubuntu
+# exit
+</code></pre>
+<p>The flags <strong>-it</strong> and <strong>--rm</strong> behave like in Docker. In general, this is useful for debugging purposes. <br/>
+After exiting the pod will be deleted.</p>
+<p>Check pods</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<h3 id="2launchamulticontainerpod">2) Launch a multi container pod</h3>
+<pre><code class="shell language-shell">$ cd ~/4
+</code></pre>
+<p><details class="cmd-file"><summary>second_pod.yaml <span class="show-text">&plus;</span></summary><pre><code class="yaml language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: second
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: debian-container
+    image: debian
+    volumeMounts:
+    - name: shared-data
+      mountPath: /pod-data
+    command: ["/bin/sh"]
+    args: ["-c", "echo Hello from the other container &gt; /pod-data/index.html; sleep 3600"]
+  - name: nginx-container
+    image: nginx
+    volumeMounts:
+    - name: shared-data
+      mountPath: /usr/share/nginx/html
+
+
+</code></pre>
+</details></p>
+<p>The volume type of <strong>emptyDir</strong> is temporary storage that will be wiped when the pod is deleted.<br/>
+It is mounted to both containers, but different locations.</p>
+<p>One container is nginx and the other is just a Debian that writes an index.html file to the shared storage.<br/>
+Create pod with file second_pod.yaml and check pods.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl create -f second_pod.yaml
+</code></pre>
+</details></p>
+<p>Check if the pods are running</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p>Wait for the container to go to <strong>Running</strong> status.</p>
+<p>Open a shell in the pod's container.</p>
+<pre><code class="shell language-shell">$ kubectl exec -it second bash
+# ls -l /pod-data/
+# apt update &amp;&amp; apt -y install curl procps net-tools netcat
+# curl localhost
+# ps -ef
+</code></pre>
+<p>You should notice, that there is no web server process, however localhost still responds!<br/>
+It is because a pod's containers do not share processes, but they do share the network.</p>
+<pre><code class="shell language-shell"># netstat -lnp
+# ifconfig
+</code></pre>
+<p>If you would attempt to start something on the same port 80, it would fail.</p>
+<pre><code class="shell language-shell"># netcat -l -p 80
+</code></pre>
+<p>Will give you <strong>Can't grab 0.0.0.0:80 with bind</strong> because nginx already is listening on it.</p>
+<pre><code class="shell language-shell"># ls -l /usr/share/nginx/html
+# ls -l /usr/sbin/nginx
+</code></pre>
+<p>Neither of these folders or files exist in the Debian container.<br/> 
+Exit the Debian container.</p>
+<pre><code class="shell language-shell"># exit
+</code></pre>
+<p>By default, kubectl exec uses the first container in the specification. 
+If we want to access nginx container:</p>
+<pre><code class="shell language-shell"># kubectl exec -it second -c nginx-container bash
+# ls -l /usr/share/nginx/html
+# ls -l /usr/sbin/nginx
+# apt update &amp;&amp; apt -y install procps net-tools
+# ps -ef
+# netstat -lnp
+</code></pre>
+<p>This time you will also see the process name in the output, since it is visible.</p>
+<pre><code class="shell language-shell"># ifconfig
+</code></pre>
+<p>Notice how the interface IP is the same as for the Debian container.</p>
+<pre><code class="shell language-shell"># exit
+</code></pre>
+<h3 id="3ourfirstpodisrestarting">3) Our first pod is restarting!</h3>
+<p>Check pods</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<p>You will notice that <strong>RESTARTS</strong> column is increasing for <strong>first</strong> pod. It is because it is launched with a sleep command of 180 seconds. 
+Just like with Docker Kubernetes will restart the process in the container.</p>
+<pre><code class="shell language-shell">$ kubectl get pod first  -o yaml | grep restartPolicy
+</code></pre>
+<p>You will see that it is configured to always restart. <br/>
+Describe first pod.</p>
+<pre><code class="shell language-shell">$ kubectl describe pod first
+</code></pre>
+<p>It is important to notice the <strong>Age</strong> field, sometimes it will tell you how many times this same event has happened.<br/>
+After some restarts the pod will also show status as <strong>CrashLoopBackOff</strong> - this can be used by monitoring systems to detect issues.</p>
+<h3 id="4todeleteapod">4) To delete a pod</h3>
+<pre><code class="shell language-shell">$ kubectl delete pod first
+</code></pre>
+<p>To verify check pods.</p>
+<p><details class="cmd-one-line"><summary>Show command</summary><pre><code class="shell language-shell">$ kubectl get pods
+</code></pre>
+</details></p>
+<h3 id="5cleanupthelab">5) Clean up the lab</h3>
+<pre><code>kubectl delete pods --all
+</code></pre></div><script src="../main.js"></script></body></html>

@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  serviceName: "mariadb"
+  updateStrategy:
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb 
+        envFrom:
+        - configMapRef:
+            name: mysql-envconf
+        - secretRef:
+            name: mysql-secret
+        ports:
+        - containerPort: 3306
+          name: mariadb
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+        - name: config-volume
+          mountPath: /etc/mysql/mariadb.conf.d/custom.cnf
+          subPath: custom.cnf
+        resources:
+          requests:
+            memory: 512M
+          limits:
+            memory: 2096M
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mysql-config
+      - name: data
+        emptyDir: {} 
