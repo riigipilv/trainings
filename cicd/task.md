@@ -2,12 +2,14 @@
 
 ## Osa 1 
 
-### Koodivaramu kasutamine
+### Koodivaramu (Gitlab) kasutamine
 * Mine aadressile https://koodivaramu.eesti.ee
 * Logi sisse eelnevalt saadud kontoga
 * Loo omale projekt riigpilv webinari grupi alla (soovitav määrata linnume Readme faili loomiseks, et tekiks haru)
 * Klooni projekt endale personaalsesse arvutisse: 
 * * git clone https://koodivaramu.eesti.ee/riigipilv-webinar/sinuprojekt.git
+
+Igal pool jälgida et oleks enda korrektne projektinimi seadistatud!
 
 ### Koodi ja testi kirjutamine
 
@@ -60,7 +62,7 @@ func TestRoute(t *testing.T) {
 	assert.Equal(t, "hello world", w.Body.String())
 }
 ```
-Loo fail go.mod ja sisesta sinna järgmine kood ning muuda projekti nimi (hetkel ei eelda me go runtime olemasolu lokaalses arvutis)
+Loo fail go.mod ja sisesta sinna järgmine kood ning muuda projekti nimi (hetkel ei eelda me go runtime olemasolu lokaalses arvutis, seega ei loo seda faili ka go enda vahenditega)
 
 ```
 module koodivaramu.eesti.ee/riigipilv-webinar/sinuprojekt
@@ -90,7 +92,6 @@ ENV GO111MODULE=on \
     GOPROXY=https://proxy.golang.org
 
 COPY ./go.mod .
-#COPY ./go.sum .
 
 RUN go mod download
 
@@ -143,7 +144,7 @@ build_docker:
 ```
 
 Lae kõik failid koodivaramusse üles (git push) ning kontrolli oma projekti lehelt kas protess käivitus ning mis on tulemused.
-Igal projektil tekib automaatselto ma isilik Docker repositoorium, kuhu andmed laetakse.
+Igal projektil tekib automaatselt oma isilik Docker repositoorium, kuhu andmed laetakse.
 
 ## Osa 2 - Kubernetes
 
@@ -260,3 +261,4 @@ spec:
 
 Saata kõik uued loodud failid ja muudetud failid koodivaramusse (git push) ning kontrollida koodivaramu kasutajaliidesest,
 kas tekkis sinna kaks uut jaotust ning kas protsess jookseb edukalt lõpuni.
+

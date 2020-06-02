@@ -42,9 +42,8 @@ Teine samm on paigaldada rakendus Kubernetese keskkonda, nii et see oleks konkre
 ### Eeldused: 
 
 1. Git käsurea programm või graafiline vahend nagu Atlassian Sourcetree
-2. Sobilik editor koodi muutmiseks, sobib hästi VS Studio Code
-3. Gitlabi konto, mis on emaili teel juba edastatud
-4. kubectl käsurea programm vajadusel Kubernetese ligipääsu testimiseks
+2. Sobilik vahend koodi muutmiseks, sobib hästi VS Studio Code
+3. Koodivaramu (Gitlab) konto, mis on emaili teel juba praktikal osalejatele edastatud
 
 ### "Pipeline" ülesehitus antud praktilise harjutuse vaates on selline:
 
