@@ -9,7 +9,7 @@
 * Klooni projekt endale personaalsesse arvutisse: 
 * * git clone https://koodivaramu.eesti.ee/riigipilv-webinar/sinuprojekt.git
 
-Igal pool jälgida et oleks enda korrektne projektinimi seadistatud!
+Igal pool jälgida et oleks enda korrektne projekti nimi seadistatud!
 
 ### Koodi ja testi kirjutamine
 

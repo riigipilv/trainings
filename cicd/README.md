@@ -1,4 +1,8 @@
-# CI/CD
+# CI/CD juhend
+
+*Mart Järvi (2020)*
+
+---
 
 CI/CD all me mõtleme reeglina “Continuous Integration” ning vastava asutuse strateegiast ja võimalustest lähtuvalt kas “Continuous Delivery” või “Continuous Deployment” protsessidest tarkvara arenduses.
 
@@ -6,7 +10,7 @@ CI/CD all me mõtleme reeglina “Continuous Integration” ning vastava asutuse
 
 CI eelduseks on keskne koodihoidla, olgu selleks siis github.com, bitbucket.org vms lahendus avalikus pilves või mõni oma installatsioon (Gitlab, Atlassian tooteperekond) privaatses andmekeskuses. Koodi halduseks on soovitav kasutada mõnda enamlevinud töövoogu nagu näiteks “Feature Branch Workflow”: https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow, kus CI rakendatakse reeglina “Master” haru peale. 
 
- "Continuous Delivery" on järgmine samm CI-st, mille eesmärk on väljastada valmis pakendatud tarkvara ning pakkuda sinna vähese vaevaga võimalust see otse mõnda keskkonda paigaldada. Reeglina "Continuous Delivery" puhul erinevad toodangueelsed keskkonnad saavad tarkvara ka automaatselt peale ning manuaalne ehk nupu vajutusega paigaldus jääb toodangu jaoks. CD-d tasub rakendada, kui soovitakse kiiresti näiteks arenduse käigus tagasisidet testkeskkonda paigaldatud versioonide kohta või teha teiste osapooltele kiiresti kättesaadavaks rakendusest uued versioonid. Samuti minimeerib CD võimalike inimlike eksimuste osa, sest väga vähe on käsitööd tarkvara uuendamisel. Isegi kui CD puhul teostada ka testkeskkonda manuaalne paigaldamine, hoiab see väga palju aega kokku pakettide ettevalmistamisel ja kättesaadavaks tegemisel. Mikroteenuste arenduses muutub CD sisuliselt hädavajalikuks, sest käsitsi suuremad hulka teenuseid ei halda efektiivselt ära.
+"Continuous Delivery" on järgmine samm CI-st, mille eesmärk on väljastada valmis pakendatud tarkvara ning pakkuda sinna vähese vaevaga võimalust see otse mõnda keskkonda paigaldada. Reeglina "Continuous Delivery" puhul erinevad toodangueelsed keskkonnad saavad tarkvara ka automaatselt peale ning manuaalne ehk nupu vajutusega paigaldus jääb toodangu jaoks. CD-d tasub rakendada, kui soovitakse kiiresti näiteks arenduse käigus tagasisidet testkeskkonda paigaldatud versioonide kohta või teha teiste osapooltele kiiresti kättesaadavaks rakendusest uued versioonid. Samuti minimeerib CD võimalike inimlike eksimuste osa, sest väga vähe on käsitööd tarkvara uuendamisel. Isegi kui CD puhul teostada ka testkeskkonda manuaalne paigaldamine, hoiab see väga palju aega kokku pakettide ettevalmistamisel ja kättesaadavaks tegemisel. Mikroteenuste arenduses muutub CD sisuliselt hädavajalikuks, sest käsitsi suuremad hulka teenuseid ei halda efektiivselt ära.
 
 "Continuous Deployment" puhul tehakse sisuliselt samad sammud nagu "Continuous Delivery" puhul, aga on automatiseeritud kogu protsess lõpuni välja, kus ka toodangusse liigub tarkvara automaatselt, nii et käsitsi sekkumist ei ole. Asutustes, kus soovitakse muudatusi toodangusse mitu korda päevas, on see ainuke võimalus piisavalt kiiresti teostada. Samas toodangusse paigaldamine paljudes kohtades toimub harvemini ning läbi muudatustehaldus protsessi, siis ei ole võimalik seda rakendada. Samuti on selle eelduseks väga kõrge automaatne kvaliteedikontroll automaattestide näol, sest arendaja käest kiiresti toodangusse liikuvat koodi keegi enam manuaalselt ei verifitseeri ja see võib tuua erinevaid probleeme endaga kaasa, kui ei ole piisavalt testitud.
 
@@ -14,7 +18,7 @@ Kokkuvõttes esimese kahe protsessi puhul on mõeldav, et "DEV" ja "OPS" on lahu
 
 Täpsemalt võib lugeda CI/CD ja Devops kohta näiteks https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment või https://about.gitlab.com/blog/2019/06/12/devops-team-structure/ 
 
- CI/CD-d tervikuna nimetatakse ka tehnilises vaates "pipeline"-ks, mis on siis koodi või muul deklaratiivsel kujul (näiteks yaml) defineeritud protsess, mis määratleb kuidas, milliste tehnoloogiatega ja mis kujul rakenduse lähtekood liigub erinevate keskkondade ja töövahendite vahel.
+CI/CD-d tervikuna nimetatakse ka tehnilises vaates "pipeline"-ks, mis on siis koodi või muul deklaratiivsel kujul (näiteks yaml) defineeritud protsess, mis määratleb kuidas, milliste tehnoloogiatega ja mis kujul rakenduse lähtekood liigub erinevate keskkondade ja töövahendite vahel.
  
 "Pipeline" formaat sõltub konkreetsetest töövahenditest, millega seda realiseeritakse ning nende keerukus vastavalt sellele, palju me loogikat sinna kirjutame. 
 
@@ -37,7 +41,7 @@ Täpsemalt võib lugeda CI/CD ja Devops kohta näiteks https://www.atlassian.com
 
 Praktikaülesande sisuks on luua “Hello world” rakendus Go programmeerimiskeele baasil, testida ja ehitada see binaariks ning pakendada Docker konteinerisse ja laadida see privaatsesse Docker repositooriumi.
 
-Teine samm on paigaldada rakendus Kubernetese keskkonda, nii et see oleks konkreetse veebiaadressi pealt kättesaadav. Kubernetesesse paigaldame standartsete vahenditega ning ei kasuta eraldi lahendusi. 
+Teine samm on paigaldada rakendus Kubernetese keskkonda, nii et see oleks konkreetse veebiaadressi pealt kättesaadav. Kubernetesesse paigaldame standartsete vahenditega ning ei kasuta eraldi muid lahendusi. 
 
 ### Eeldused: 
 
