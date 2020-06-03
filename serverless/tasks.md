@@ -7,7 +7,7 @@ Selle praktilise osa läbi tegemiseks on vaja järgnevaid tööriistu:
 - faas-cli (õpetame, kuidas paigaldada hiljem)
 - kubeless (õpetame, kuidas paigaldada hiljem)
 
-Serverless kubernetese klaster asub siin: k8s-test.riigipilv.ee
+Serverless kubernetese klaster asub siin: https://k8s-test.riigipilv.ee, klaster k8s-training-serverless  
 Siit saab tõmmata ka Kubeconfig faili, et klastrile ligi pääseks.
 
 Kubectl tööriista saab kasutada samast kohast veebiliidesest, või tõmmata alla selle veebilehe alt paremast nurgast.
@@ -51,18 +51,18 @@ OpenFaaS on kättesaadav veebiliidest mööda, ning kasutades `faas-cli` utiliit
 
 Windowsi instruktsioonid on siin: https://docs.openfaas.com/cli/install/
 
-Veebiliides asub http://gateway.171.22.246.191.xip.io/ui/
-  Kasutajanimi: admin
-  Parool: jRbWYgfzrp7Q
+Veebiliides asub http://gateway.171.22.246.191.xip.io/ui/  
+  Kasutajanimi: admin  
+  Parool: jRbWYgfzrp7Q  
 
 Alustuseks soovitaks veebiliidest mööda paigaldada erinevaid näidisfunktsioone, et aru saada kuidas API ja "trigger"-id töötavad. Näiteks võib proovida "Have I Been Pwnd" funktsiooni, mis tagastab leitud paroolide arvu iga sisendparooli kohta erinevatest teadaolevatest paroolileketest. Kirjuta parool "Request" väljale, vajuta "Invoke" ja peaksid nägema väljundit.
 
 Lisaks tasuks proovida `curl` tööriistaga neid funktsioone välja kutsuda, kasutades funktsiooni kirjelduses olevat URL-i.
 
-Näiteks: https://gateway.171.22.246.191.xip.io/function/haveibeenpwned.sander-fn
-Kus "sander-fn" on namespace nimi, ja "haveibeenpwned" on funktsiooni nimi.
+Näiteks: https://gateway.171.22.246.191.xip.io/function/haveibeenpwned.sander-fn  
+Kus "sander-fn" on namespace nimi, ja "haveibeenpwned" on funktsiooni nimi.  
 
-Järgnevalt tuleks tööle saada `faas-cli` (lühidalt lihtsalt `faas`) utiliit.
+Järgnevalt tuleks tööle saada `faas-cli` (lühidalt lihtsalt `faas`) utiliit.  
 Järgnevad käsud annavad admin ligipääsu OpenFaaSile.
 
 * export OPENFAAS_URL=https://gateway.171.22.246.191.xip.io
@@ -75,7 +75,7 @@ Namespace'e saab näha nii:
 
 `faas namespace`
 
-Ja selleks, et oma namespace'i kasutada, peaks iga `faas` käsu lõppu, mis tegeleb klastriga, panema `-n <namespace_nimi>`, näiteks `faas ls -n sander-fn`.
+Ja selleks, et oma namespace'i kasutada, peaks iga `faas` käsu lõppu, mis tegeleb klastriga, panema `-n <namespace_nimi>`, näiteks `faas ls -n sander-fn`.  
 Näites tähistatakse need funktsioonid ära, kus seda kasutama peaks.
 
 ## Arhitektuur
@@ -86,8 +86,8 @@ Näites tähistatakse need funktsioonid ära, kus seda kasutama peaks.
 
 Selleks, et näha, kas midagi toimub ka, kogutakse meetrikat Prometheus instantsi, mida saab vaadata siit: https://prometheus.171.22.246.191.xip.io/dashboard/db/openfaas?refresh=5s&orgId=1
 
-  Kasutajanimi: admin
-  Parool: admin
+  Kasutajanimi: admin  
+  Parool: admin  
 
 ## Kasutamine
 
@@ -219,15 +219,15 @@ Mida "Watchdog" teeb ja kuidas töötab, seletatakse paremini siin: https://docs
 Kõigepealt on vaja funktsiooni "image" laadida üles Dockeri registrisse, sest kõigil kubernetese nodel peab olema ligipääs sellele "image"-ile.
 Ajutiselt on selleks püsti pandud Harbor (https://goharbor.io/) register. Me kasutame seda jällegi admin õigustes, et asja mitte liiga keeruliseks ajada, aga tegelikult saab Harboriga ägedaid asju teha, nagu näiteks konteinerite automaatne turvaskänn.
 
-Harbor on kättesaadav siit: https://registry.171.22.246.191.xip.io
-  Kasutajanimi: admin
-  Parool: Harbor12345
+Harbor on kättesaadav siit: https://registry.171.22.246.191.xip.io  
+  Kasutajanimi: admin  
+  Parool: Harbor12345  
 
 Selleks, et ühendada enda masin Dockeri registriga:
 
-`docker login https://registry.171.22.246.191.xip.io`
-  Kasutajanimi: admin
-  Parool: Harbor12345
+`docker login https://registry.171.22.246.191.xip.io`  
+  Kasutajanimi: admin  
+  Parool: Harbor12345  
 
 Peale seda saab teha järgnevat:
 
@@ -254,7 +254,7 @@ faas ls -n <namespace_nimi>
 Funktsiooni standartseks välja kutsumiseks on järgnev aadress:
 
 ```
-[ https://gateway.171.22.246.191.xip.io/function/<funktsiooni_nimi>.<namespace_nimi>]
+https://gateway.171.22.246.191.xip.io/function/<funktsiooni_nimi>.<namespace_nimi>
 ```
 
 ## Asünkroonne vs sünkroonne välja kutsumine
@@ -316,7 +316,7 @@ Testime automaatset skaleerumist nii:
   kubectl run --rm -it -n <namespace_nimi> --image=yamaszone/hey hey -- -z=40s -q 7 -c 2 -m GET https://gateway.171.22.246.191.xip.io/function/<funktsiooni_nimi>.<namespace>
 ```
 
-See käsk käivitab konteineri koormuse testimise tööriistaga `hey`, tehes `-c` 2 päringut korraga, üle`-z` 40 sekundi, limiteerides päringute arvu `-q` 7'ni sekundis.
+See käsk käivitab konteineri koormuse testimise tööriistaga `hey`, tehes `-c` 2 päringut korraga, üle`-z` 40 sekundi, limiteerides päringute arvu `-q` 7-ni sekundis.
 
 Kui on huvi, võib üritada ka muuta enda funktsiooni konfiguratsiooni, lubades funktsioonil skaleeruda nulli. Selleks tuleks funktsiooni konfiguratsioonifailis `com.openfaas.scale.zero` muuta `true`-ks, ja teha uus paigaldus. Nulli skaleerumine aitab hoida kokku raha, kui funktsioon ei tööta kui seda pole vaja. Negatiivseks küljeks on aga see, et funktsioon peab tegema "külma stardi" (cold start), mis tähendab, et esimesel päringul peab konteiner kõigepealt käima minema.
 
