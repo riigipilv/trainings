@@ -143,7 +143,7 @@ Lihtsuse mõttes toon välja meie kasutatava templaadi:
 ```yaml
 provider:
   name: openfaas
-  gateway: http://gateway.171.22.246.191.xip.io
+  gateway: https://gateway.171.22.246.191.xip.io
 
 functions:
   myfunction:
