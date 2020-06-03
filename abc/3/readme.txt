@@ -46,7 +46,9 @@ In order to have our own corner for the labs we will use our own namespace.
 > $ curl -o abc.tar.gz http://abc.entigo.dev/abc.tar.gz
 > $ tar xvzf abc.tar.gz
 
-*NB: If you close the console, you will have to do steps 5 and 6 again.*
+The same materials can be obtained from: https://github.com/riigipilv/trainings/tree/master/abc
+
+*NB: If you close the rancher console, you will have to do steps 5 and 6 again.*
 
 
 
