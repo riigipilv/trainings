@@ -42,7 +42,7 @@ function htmlHead(title) {
     <header>
         <div>
             <span>${title}</span>
-            <img src="../logo.svg"/>
+            <a href="https://www.entigo.com/" target="_blank"><img src="../logo.svg"/></a>
         </div>
     </header>
     <div class="body">`;
@@ -229,7 +229,7 @@ fs.readdir(folder, { withFileTypes: true }, function(err, files) {
         <header>
             <div>
                 <span>${title}</span>
-                <img src="./logo.svg"/>
+                <a href="https://www.entigo.com/" target="_blank"><img src="./logo.svg"/></a>
             </div>
         </header>
         <div class="body">
