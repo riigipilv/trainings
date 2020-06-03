@@ -73,7 +73,7 @@ Kuna OpenFaaS multi-namespace implementatsioon on veel alphas, siis me ei hakanu
 
 Namespace'e saab näha nii:
 
-`faas namespace`
+`faas namespaces`
 
 Ja selleks, et oma namespace'i kasutada, peaks iga `faas` käsu lõppu, mis tegeleb klastriga, panema `-n <namespace_nimi>`, näiteks `faas ls -n sander-fn`.  
 Näites tähistatakse need funktsioonid ära, kus seda kasutama peaks.
@@ -84,10 +84,12 @@ Näites tähistatakse need funktsioonid ära, kus seda kasutama peaks.
 
 ## Monitooring
 
-Selleks, et näha, kas midagi toimub ka, kogutakse meetrikat Prometheus instantsi, mida saab vaadata siit: https://prometheus.171.22.246.191.xip.io/dashboard/db/openfaas?refresh=5s&orgId=1
+Selleks, et näha, kas midagi toimub ka, kogutakse meetrikat Prometheus instantsi, mida saab vaadata siit: https://prometheus.171.22.246.191.xip.io
 
   Kasutajanimi: admin  
   Parool: admin  
+
+Kui prometheus näitab "Page not found"
 
 ## Kasutamine
 
@@ -112,19 +114,13 @@ mkdir -p myfunction && \
 cd myfunction
 ```
 
-Erinevate templaatide nägemiseks käivita järgmine käsk:
+Erinevate templaatide (keelte) nägemiseks käivita järgmine käsk:
 
 ```sh
 faas template store ls
 ```
 
-Tõmba endale sobiv templaat:
-
-```sh
-faas template pull [mytemplate]
-```
-
-Demonstratsioonis me kasutame "Python"-i funktsiooni, aga ka teiste keelte kasutamine on täiesti lubatud.
+Demonstratsioonis me kasutame "Python3" keeles kirjutatud funktsiooni, aga ka teiste keelte kasutamine on täiesti lubatud.
 
 ```sh
 faas new --lang python3 myfunction
@@ -322,8 +318,78 @@ Kui on huvi, võib üritada ka muuta enda funktsiooni konfiguratsiooni, lubades 
 
 # Kubeless
 
-## Seletus
+Kuigi OpenFaaS tehniliselt töötab ja teeb, mis lubab, siis - nagu te tõenäoliselt aru saite - tundub ta vaevaline ja suur. Kuigi OpenFaaS annab väga hea ülevaate, kuidas serverless lahendused töötavad, siis tänaseks on olemas efektiivsemaid lahendusi.
 
-## Installatsioon
+Kubeless (https://kubeless.io/) lubab kõike seda teha palju-palju lihtsamalt, kuna on loodud maast madalast integreeruma Kubernetesega, ja üritab järgida AWS-i, Azure ja GCS-i parimaid praktikaid.
+
+Alustuseks tuleks alla laadida `kubeless` tööriist. Selle saab tõmmata nende githubi releases lehelt: https://github.com/kubeless/kubeless/releases.
+
+Testimaks, kas `kubeless`  tööriist töötab, võib proovida järgnevat käsku:
+`kubeless function list`
+
+See tagastab kõik defineeritud funktsioonid vaikimisi nimeruumis.
 
 ## Ülesanded
+
+Alustame jälle lihtsast funktsioonist, mis tagastab kõik parameetrid.
+
+Näidisfunktsioon "Python"-is.
+
+```python
+def hello(event, context):
+  print event
+  return event['data']
+```
+
+Funktsioonid "kubeless"-is töötavad sarnaselt OpenFaaSile, ja on samasuguse ehitusega igas keeles:
+* Esimese funktsiooni parameetrina võetakse vastu `event` objekt, milles on kõik vajalik informatsioon sündmuse allika kohta. Eriti tähtis on võti `data`, kus on kirjas välja kutsumise parameetrid.
+* Teine objekt `context` lisab informatsiooni funktsiooni kohta.
+* Vastab sõne või objektiga, mis saadetakse tagasi funktsiooni välja kutsujale.
+
+Selle funktsiooni kirjutame lokaalsesse faili nimega `test.py`.
+
+Funktsiooni paigaldamiseks Kubernetesesse piisab järgnevast reast:
+`kubeless function deploy hello --runtime python2.7 --from-file test.py --handler test.hello --namespace <namespace_nimi>`
+
+Mis see käsk tegi?
+* `hello` - funktsiooni nimi, mida me paigaldada tahame
+* `--runtime python2.7` - keel, millega soovime seda funktsiooni jooksutada. Toetatud keeli saab vaadata nii: `kubeless get-server-config`
+* `--from-file test.py` - fail, mis funktsioonina üles laadida. See võib ka olla .zip fail, niikauaks kuni see on väiksem kui 1MB.
+* `--handler test.hello` - defineerib funktsiooni, mida faili seest jooksutada.
+
+Nüüd vaadates järgnevaid käskusid, peaks funktsioon paistma:
+```bash
+kubectl get functions --namespace <namespace_nimi>
+
+kubeless function ls --namespace <namespace_nimi>
+```
+
+Ilma lisakonfiguratsioonita saab funktsiooni kutsuda ainult käsurealt:
+```
+kubeless function call hello --data 'Hello world!' --namespace <namespace_nimi>
+```
+
+Kui on ligipääs olemas Kubernetese klastri sisse, või kasutades `kubectl proxy` käsku, saaks ilma midagi erilist tegemata ka kutsuda funktsiooni välja kasutades `curl`-i, kuid õnneks tehakse `kubeless`-i poolt funktsioonide avalikustamine väga lihtsaks.
+
+Avalikustame meie funktsiooni avalikku internetti:
+```bash
+kubeless trigger http create hello-expose --function-name hello --namespace <namespace_nimi> --hostname example.com
+```
+
+Mis see käsk tegi?
+* `trigger http create` - loo HTTP lõpp-punkt
+* `hello-expose` - lõpp-punkti nimi
+* `--function-name hello` - funktsiooni nimi, mida selle lõpp-punkti poolt käivitatakse
+* `--hostname ...` - *väga tähtis* nimi, mida lõpp-punkt kuulab. Seda valesti konfigureerides ei jõua päringud funktsioonini. Meie aga peame selle valesti konfigureerima ühe väikse bugi tõttu.
+
+```
+Bugi sisu:
+
+  Hetkel kui hostname parameetri nimes on sees IP aadress, siis kui Ingress kontroller saab endale klastrisisese IP, kirjutatakse ka hostname parameeter üle, mis kaotab ühenduse umbes 30 sekundit peale ingressi paigaldamist.
+```
+
+Peale selle käsu jooksutamist peaks saama `curl` käsuga kutsuda välja funktsiooni:
+```bash
+$ curl -H "Host: example.com" 171.22.246.191.xip.io -d "foo bar"
+foo bar
+```
