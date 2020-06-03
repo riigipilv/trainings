@@ -82,3 +82,7 @@ You will see in the Server address field; the pod is on port 80.
 ### 6) Clean up the lab
 > $ kubectl delete deployment --all
 > $ kubectl delete svc --all
+
+
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*

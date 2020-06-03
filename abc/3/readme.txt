@@ -50,3 +50,5 @@ In order to have our own corner for the labs we will use our own namespace.
 
 
 
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*

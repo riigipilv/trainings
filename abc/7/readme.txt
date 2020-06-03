@@ -77,3 +77,7 @@ The downside is that it would be a single point of failure - when the worker nod
 ### 3) Clean up the lab
 > $ kubectl delete deployment --all
 > $ kubectl delete svc --all
+
+
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*

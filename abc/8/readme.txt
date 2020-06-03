@@ -51,3 +51,8 @@ The custom configuration has been applied too.
 ### 4) Clean up the lab
 > $ kubectl delete sts --all
 > $ kubectl delete cm --all
+
+
+
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*

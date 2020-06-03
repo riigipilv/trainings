@@ -106,3 +106,7 @@ To verify check pods.
 
 ### 5) Clean up the lab
 > kubectl delete pods --all
+
+
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*

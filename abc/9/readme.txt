@@ -50,3 +50,7 @@ But the endpoints in a service depend on the master's API - **if the master is d
 ### 2) Clean up the lab
 > $ kubectl delete deployment --all
 > $ kubectl delete svc --all
+
+
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*

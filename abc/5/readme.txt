@@ -60,3 +60,7 @@ You should see that a new replacement pod is launched.
 
 ### 6) Clean up the lab
 > $ kubectl delete deploy --all
+
+
+*Martin Vool, Entigo* </br>
+*MIT License, https://opensource.org/licenses/MIT*
