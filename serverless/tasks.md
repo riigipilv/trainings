@@ -1,4 +1,4 @@
-# Vajalik informatsioon
+# Praktilise osa jaoks vajalik informatsioon
 
 Selle praktilise osa läbi tegemiseks on vaja järgnevaid tööriistu:
 - Docker
@@ -7,8 +7,8 @@ Selle praktilise osa läbi tegemiseks on vaja järgnevaid tööriistu:
 - faas-cli (õpetame, kuidas paigaldada hiljem)
 - kubeless (õpetame, kuidas paigaldada hiljem)
 
-Serverless kubernetese klaster asub siin: https://k8s-test.riigipilv.ee, klaster k8s-training-serverless  
-Siit saab tõmmata ka Kubeconfig faili, et kubectl oskaks klastriga ühenduda.
+Serverless kubernetese klastri Rancheri konsool asub siin: https://k8s-test.riigipilv.ee, klaster k8s-training-serverless  
+Siit saab tõmmata ka Kubeconfig faili, et kubectl oskaks Kubernetese klastriga ühenduda.
 
 Kubectl tööriista saab kasutada samast veebiliidesest, või endale arvutisse alla laadida veebilidese paremalt alt osast.
 Järgnevad teenused on vajalikud praktilise osa läbi viimiseks:
