@@ -8,18 +8,15 @@ Selle praktilise osa läbi tegemiseks on vaja järgnevaid tööriistu:
 - kubeless (õpetame, kuidas paigaldada hiljem)
 
 Serverless kubernetese klaster asub siin: https://k8s-test.riigipilv.ee, klaster k8s-training-serverless  
-Siit saab tõmmata ka Kubeconfig faili, et kubectl oskaks klastriga ühenduda..
+Siit saab tõmmata ka Kubeconfig faili, et kubectl oskaks klastriga ühenduda.
 
 Kubectl tööriista saab kasutada samast veebiliidesest, või endale arvutisse alla laadida veebilidese paremalt alt osast.
 Järgnevad teenused on vajalikud praktilise osa läbi viimiseks:
 
 ```
-OpenFaaS frontend: http://gateway.171.22.246.191.xip.io/ui/
-OpenFaaS Prometheus: http://prometheus.171.22.246.191.xip.io/ui/
-
-Serverless frontend:
-
-Registry frontend: registry.171.22.246.191.xip.io
+OpenFaaS frontend: https://gateway.171.22.246.191.xip.io/ui/
+OpenFaaS Prometheus: https://prometheus.171.22.246.191.xip.io/ui/
+Registry frontend: https://registry.171.22.246.191.xip.io
 ```
 
 # Serverless sissejuhatus
