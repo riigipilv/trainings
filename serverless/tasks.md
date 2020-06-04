@@ -224,13 +224,13 @@ Selleks, et ühendada enda masin Dockeri registriga:
   Kasutajanimi: admin  
   Parool: Harbor12345  
 
-Peale seda saab teha järgnevat:
+Peale Dockeri registrisse sisse logimist saab sinna meie funktsiooni konteineri üles lükata:
 
 ```sh
-docker push registry.171.22.246.191.xip.io/library/<minu_nimi_funktsioon>
+faas push -f ./myfunction.yml
 ```
 
-Funktsiooni kubernetesesse paigaldamiseks jooksuta järgnev käsk:
+Funktsiooni registrist kubernetesesse paigaldamiseks jooksuta järgnev käsk:
 
 ```sh
 faas deploy -f ./myfunction.yml
