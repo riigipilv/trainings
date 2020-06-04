@@ -3,7 +3,7 @@
 ### 1) Log in to rancher
 
 Go to https://k8s-test.riigipilv.ee/
-The username should be fistname.lastname and password is the e-mail address you used for registering to this course.
+The username and password is the e-mail address you used for registration to the event.
 
 
 ### 2) Enter the console of ABC project
