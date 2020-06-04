@@ -8,10 +8,9 @@ Selle praktilise osa läbi tegemiseks on vaja järgnevaid tööriistu:
 - kubeless (õpetame, kuidas paigaldada hiljem)
 
 Serverless kubernetese klaster asub siin: https://k8s-test.riigipilv.ee, klaster k8s-training-serverless  
-Siit saab tõmmata ka Kubeconfig faili, et klastrile ligi pääseks.
+Siit saab tõmmata ka Kubeconfig faili, et kubectl oskaks klastriga ühenduda..
 
-Kubectl tööriista saab kasutada samast kohast veebiliidesest, või tõmmata alla selle veebilehe alt paremast nurgast.
-
+Kubectl tööriista saab kasutada samast veebiliidesest, või endale arvutisse alla laadida veebilidese paremalt alt osast.
 Järgnevad teenused on vajalikud praktilise osa läbi viimiseks:
 
 ```
@@ -393,3 +392,9 @@ Peale selle käsu jooksutamist peaks saama `curl` käsuga kutsuda välja funktsi
 $ curl -H "Host: example.com" 171.22.246.191.xip.io -d "foo bar"
 foo bar
 ```
+
+# Kokkuvõte
+
+Ametlik praktiline osa on selleks puhuks läbi, aga ligipääsud jäävad veel vähemalt päeva lõpuni.
+
+Minu soovitus oleks ise mängida erinevate konseptsioonidega, näiteks testida `kubeless` autoskaleerumist, ning käivitada erinevaid näited (https://github.com/serverless/serverless-kubeless/tree/master/examples).
