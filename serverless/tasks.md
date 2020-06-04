@@ -64,7 +64,7 @@ Kus "sander-fn" on namespace nimi, ja "haveibeenpwned" on funktsiooni nimi.
 Järgnevalt tuleks tööle saada `faas-cli` (lühidalt lihtsalt `faas`) utiliit.  
 Järgnevad käsud annavad admin ligipääsu OpenFaaSile.
 
-* export OPENFAAS_URL=https://gateway.171.22.246.191.xip.io
+* export OPENFAAS_URL="https://gateway.171.22.246.191.xip.io"
 * export PASSWORD=jRbWYgfzrp7Q
 * echo -n $PASSWORD | faas-cli login --password-stdin
 
