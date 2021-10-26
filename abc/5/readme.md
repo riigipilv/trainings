@@ -19,8 +19,6 @@ Inspect the file deployment.yaml
 
 ```
 cat ~/5/deployment.yaml
-```
-```
 cd ~/5
 kubectl apply -f deployment.yaml
 ```
@@ -57,8 +55,6 @@ Check pods and deployment.
 ```
 kubectl get pods
 kubectl get deployment
-
-```
 kubectl describe deploy nginx-yaml
 ```
 
