@@ -24,7 +24,7 @@ Peale piisava aja müüdumise peaksid kõik Pod'id olema terves (healthy) staatu
 Veenduge, et teil on **kliendi** Pod alles: 
 
 ```
-kubectl get pods
+k get pods
 ```
 
 Kui teil seda mingil põhjusel pole, siis kasutage käsku kubectl create -f ~/4/client.yaml et see uuesti luua. 
@@ -45,7 +45,7 @@ Käivitage **liveandready** teenus ja deployment.
 
 
 ```
-kubectl create -f liveandready.yaml
+k create -f liveandready.yaml
 ```
 
 Käivitage jälgimise skript:
@@ -69,8 +69,8 @@ Kuid teenuse lõpp-punktid sõltuvad **Master Node** API-st – Kui **Master Nod
 ### 2) Puhastage ülesande keskkond
 
 ```
-kubectl delete deployment --all
-kubectl delete svc --all
+k delete deployment --all
+k delete svc --all
 ```
 
 
