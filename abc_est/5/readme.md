@@ -1,41 +1,52 @@
-# Kubernetes ABC - Ülesanne 5 - 
+# Kubernetes ABC - Ülesanne 5: Andmete haldus 
+
+Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete kõiteid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
  
-### 1) Empty Dir
+### 1) Empty Dir tüüpi kõited (volumes)
+
+Liigume ülesande kausta ning vaatame **empty_dir.yaml** faili sisu: 
 
 ```
 cd ~/5
 cat ~/5/empty_dir.yaml
 ```
 
-It will create a service for the deployment and a deployment with two pods. Each pod has two containers.
-The pod has defined a volume named **test** and the type is **emptyDir**.
+Selles failis on kirjeldatud juuruts ühe teenuse ja kahe Podiga. Iga Pod sisaldab kahte konteinerit ning köidet (volume) nimega **test**, mille tüübiks on **emptyDir**.
 
-In nginx container it is mounted under /usr/share/nginx/html and ubuntu container /busy.
-Pay attention to the ubuntu pods start up command. It will write an index.html file to /busy that contains the namespace, worker node hostname and pod name. 
+Nginxi konteineris on see kõide ühendatud (mounted) kausta **/usr/share/nginx/html** ja ubuntu konteineriis kausta **/busy** alla. 
+Pöörake tähelepanu ubuntu podide käivituskäsule. See loob index.html faili **/busy** kausta, mis sisaldab Podi nimeruumi väärtust, Töötaja masina (Worker Node) hostinime ja Podi nime.
+
+laseme Kubernetesel selle Juurutuse tööle panna:  
 
 ```
 kubectl create -f empty_dir.yaml
 kubectl get pods -o wide
-
 ```
-Please note also the worker node the pod is launched on.
+
+Please note also the worker node the pod is launched on. 
 
 From the last lab you should still have **client** pod. If you don't have it for some reason, use ```kubectl create -f ~/4/client.yaml ```
 
 Open a terminal in the client pod and access the emptydir service.
 
+Pange tähele ka millise Kubernetese serveri peal (Worker Node) Pod käivitatakse.
+
+Viimasest laborist peaks teil endiselt alles olema **client** Pod. Kui teil seda mingil põhjusel pole, kasutage käsku ```kubectl create -f ~/4/client.yaml``` selle loomiseks. 
+
+Avage kliendi Podis terminal ja vaatake **emptydir** teenust. 
+
 ```
 kubectl exec -it client bash 
 curl emptydir
-
 ```
-Do this several times.
+
+Korrakse seda mitu korda ning uurige, mis infot see väljastab. 
 
 ```
 exit
 ```
 
-Now log into the first emptydir pod:
+Nüüd logige sisse mõlemasse podi ning muutke ära HTML faili sisu, et oleks näda erinevus mõlema Pod'i vahel:
 
 ```
 kubectl exec -it <first pod> -c ubuntu bash
@@ -46,7 +57,7 @@ echo "I am pod two" >> /busy/index.html
 exit
 ```
 
-From the client pod, do the curl commands again:
+Nüüd uurige clientPod'i kaudu uuesti, mis väljundit see veebiteenus näitab: 
 
 ```
 kubectl exec -it client bash 
@@ -58,6 +69,11 @@ The empty dir is shared between the nginx and ubuntu containers - this is how ng
 It is not shared between pods - even if they happen to run on the same worker node.
 
 Delete the first emptydir pod and check pods.
+
+
+
+
+
 
 ```
 kubectl delete pod <first emptydir pod
