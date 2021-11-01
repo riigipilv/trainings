@@ -1,6 +1,6 @@
 # Kubernetes ABC - Ülesanne III: Kubernetese Juurutused (Deployments) 
 
-Kubernetese Juurutused (Deployments) võimaldavad defineerida pode, seadistada neile labeleid ning määrata korraga käivitatavate podide arvu (Replica Set).  
+Kubernetese Juurutused (Deployments) võimaldavad defineerida Pod'ide komplekti, seadistada neile labeleid ning määrata korraga käivitatavate podide arvu (Replica Set).  
 Selle ülesande käigus vaatame kuidas juurutusi luua, neid hallata ning kuidas skaleerida jooksvalt podide ja konteinerite arvu juurutuse "sees". 
 
 ### 1) Üks viis juurutuse (Deployment) loomiseks on otse kubectli käsu abil.
