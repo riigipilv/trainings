@@ -171,6 +171,8 @@ Kustutame kõik Pod'id
 
 ```k delete pods --all```
 
+[Järgmine ülesanne](/abc_est/3/readme.md)  
+[Tagasi algusesse](/abc_est/readme.md)  
 
 *Pelle Jakovits (2021)*  
 *Martin Vool, Entigo (2020)*  
