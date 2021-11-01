@@ -27,7 +27,7 @@ k get pods -o wide
 
 
 Pange tähele ka millise Kubernetese serveri peal (Worker Node) Pod käivitatakse.  
-Viimasest laborist peaks teil endiselt alles olema **client** Pod. Kui teil seda mingil põhjusel pole, kasutage käsku ```kubectl create -f ~/4/client.yaml``` selle loomiseks.  
+Neljandast ülesandest peaks teil endiselt alles olema **client** Pod. Kui teil seda mingil põhjusel pole, siis [looge see uuesti](../4/readme.md)
 
 Avage kliendi Podis terminal ja vaatake **emptydir** teenust. 
 
@@ -42,7 +42,7 @@ Korrakse seda mitu korda ning uurige, mis infot see väljastab.
 exit
 ```
 
-Nüüd logige sisse mõlemasse podi ning muutke ära HTML faili sisu, et oleks näda erinevus mõlema Pod'i vahel:
+Nüüd logige sisse mõlemasse podi ning muutke ära HTML faili sisu uue tekstiga:
 
 ```
 k exec -it <first pod> -c ubuntu bash
