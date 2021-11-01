@@ -22,7 +22,11 @@ Mõned Kubernetese kõige huvitavamad funktsionaalsused:
 
 ## Serverid vs Virtuaalmasinad vs Konteinerid 
 
-Konteinerid on sarnased virtuaalmasinatele, kuid nad saavad paremini jagada operatsioonisüsteemi (OS) resursse üksteisest eraldatud rakenduste vahel (tänu nõrgematele isolatsiooni nõuetele). Seetõttu peetakse konteinereid kergemateks. Sarnaselt virtuaalmasinatele on konteineril oma failisüsteem, protsessori jaotis, mälu, protsessiruum, võrguliides ja palju muud. 
+Traditsiooniliselt on rakenduste üles seadmiseks kasutatud füüsilisi servereid. Füüsilises serveris ei saa rakenduste jaoks ressursipiire määratleda. Kui füüsilises serveris töötab mitu rakendust, siis võib esineda juhtumeid, kus üks rakendus võtab suurema osa ressurssidest ja teiste rakenduste töö selle tõttu halveneb. Samuti on keeruline takistada samas serveris olevatel rakendustel üksteise andmetele ligi pääseda, mis teeb turvalisuse tagamise keerulisemaks. 
+
+Ühe lahendusena on võetud kasutusele virtualiseerimine, mis võimaldab ühes füüsilised serveris käivitada mitu virtuaalset masinat. See võimaldab eeraldada rakendused üksteisest - tagades teatud turbetaseme, kuna ühe rakenduse andmetele ei pääse teised rakendused enam juurde. Virtualiseerimine võimaldab füüsilise serveri ressursse paremini ära kasutada kuna on lihtsam jooksutada mitmeid rakendusi sama füüsilise serveri peal. Samuti on lihtsam saavutada skaleeritavust, kuna suuremate rakenduste jaoks saab hõlpsasti lisada arvutusresursse uute virtuaalmasinate näol. Aga virtuaalmasinate puudus on see, et iga VM on täismasin, mis vajab lisaks virtualiseeritud riistvarale kõiki komponente, sealhulgas oma operatsioonisüsteemi.
+
+Konteinerid on sarnased virtuaalmasinatele, kuid tänu nõrgematele isolatsiooni nõuetele on need võimelised jagama operatsioonisüsteemi (OS) resursse. Konteinereid peetakse virtuaalmasinatest kergemateks kuna igale eraldatud rakendusele ei ole vaja oma operatsioonisüsteemi. Aga sarnaselt virtuaalmasinatele on konteineril oma failisüsteem, protsessori jaotis, mälu, protsessiruum, võrguliides ja palju muud. Samuti on konteinerite loomine, käivitamine ja eemaldamine palju kiirem kui virtuaalmasinate puhul. 
 
 ![Server vs VM vs Kubernetes](https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg)  
 (Allikas: https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/)
