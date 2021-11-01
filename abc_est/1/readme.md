@@ -72,5 +72,7 @@ Samad materjalid on kätte saadavad siin: https://github.com/riigipilv/trainings
 
 
 
-*Martin Vool, Entigo* 
-*MIT License, https://opensource.org/licenses/MIT*
+
+*Pelle Jakovits (2021)*  
+*Martin Vool, Entigo (2020)*  
+*MIT License, https://opensource.org/licenses/MIT*  
