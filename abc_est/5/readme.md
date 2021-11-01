@@ -19,8 +19,8 @@ Pöörake tähelepanu ubuntu podide käivituskäsule. See loob index.html faili 
 laseme Kubernetesel selle Juurutuse tööle panna:  
 
 ```
-kubectl create -f empty_dir.yaml
-kubectl get pods -o wide
+k create -f empty_dir.yaml
+k get pods -o wide
 ```
 
 
@@ -30,7 +30,7 @@ Viimasest laborist peaks teil endiselt alles olema **client** Pod. Kui teil seda
 Avage kliendi Podis terminal ja vaatake **emptydir** teenust. 
 
 ```
-kubectl exec -it client bash 
+k exec -it client bash 
 curl emptydir
 ```
 
@@ -43,10 +43,10 @@ exit
 Nüüd logige sisse mõlemasse podi ning muutke ära HTML faili sisu, et oleks näda erinevus mõlema Pod'i vahel:
 
 ```
-kubectl exec -it <first pod> -c ubuntu bash
+k exec -it <first pod> -c ubuntu bash
 echo "I am pod one" >> /busy/index.html
 exit
-kubectl exec -it <second pod> -c ubuntu bash
+k exec -it <second pod> -c ubuntu bash
 echo "I am pod two" >> /busy/index.html
 exit
 ```
@@ -54,7 +54,7 @@ exit
 Nüüd uurige **client** Pod'i kaudu uuesti, mis väljundit see veebiteenus näitab: 
 
 ```
-kubectl exec -it client bash 
+k exec -it client bash 
 curl emptydir
 ```
 
@@ -65,8 +65,8 @@ Seda ei jagata erinevate Pod'ide vahel – isegi kui need juhtuvad töötama sam
 Kustutage esimene  emptydir pod ja uuride uuesti Pod'ide nimekirja: 
 
 ```
-kubectl delete pod <first emptydir pod
-kubectl get pods -o wide
+k delete pod <first emptydir pod
+k get pods -o wide
 ```
 
 Korrake curl käsku **client** Pod'i seest. 
@@ -76,9 +76,9 @@ Väljundi põhjal peaks olema näha, et emptyDir tüüpi köite (Volume) sisu ei
 Avage teise Pod'i sees käsurida ning katkestage (kill) nginx protsess. 
 
 ```
-kubectl exec -it <second emptydir pod> -c nginx sh
+k exec -it <second emptydir pod> -c nginx sh
 kill 1
-kubectl get pods -o wide
+k get pods -o wide
 ```
 
 Peaksite nägema Pod'i taaskäivituste arvu suurenemist nginxi tapmise järel.
@@ -98,8 +98,8 @@ See on sarnane juurutus eelmisele, kuid köite (volume) tüüp on nüüd **hostp
 Looge juurutus faili host_path.yaml abil ja kontrollige Pod'ide infot.
 
 ```
-kubectl create -f host_path.yaml
-kubectl get pods -o wide
+k create -f host_path.yaml
+k get pods -o wide
 ```
 
 Hostpath tüüpi köide (volume) ühendatakse (mount) asukohta (gkaust või fail) otse serverist (worker node), milles vastav Pod jookseb. Kui kaks Pod'i juhtuvad olema samas severis, oleks nendel Podidel ühendatud täpselt sama väline kaust või fail.
@@ -107,7 +107,7 @@ Hostpath tüüpi köide (volume) ühendatakse (mount) asukohta (gkaust või fail
 Kui Podid on püsti, kasutage mitu korda curl käsku ning uurige tulemust: 
 
 ```
-kubectl exec -it client bash 
+k exec -it client bash 
 curl hostpath
 ```
 
@@ -117,8 +117,8 @@ Kui te tapate Pod'i, siis võib juhtuda, et asendus luuakse hoopis teises Kubern
 Tapke kõik **hostpath** Pod'id ja kontrollige Pod'ide nimekirja. 
 
 ```
-kubectl delete pod <hostpath>
-kubectl get pods -o wide
+k delete pod <hostpath>
+k get pods -o wide
 ```
 
 Jooksutage uuesti curl käsku client Pod sees. 
@@ -130,8 +130,8 @@ Negatiivne külg on aga see, et kui server rikki läheb, siis nendele andmetele 
 ### 3) Ülesande keskkonna puhastamine
 
 ```
-kubectl delete deployment --all
-kubectl delete svc --all
+k delete deployment --all
+k delete svc --all
 ```
 
 *Martin Vool, Entigo* </br>
