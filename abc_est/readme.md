@@ -24,13 +24,13 @@ See on mõeldud keskmiste ja suurte süsteemide juurutuste jaoks. Sellel on väg
 
 Õppematerjalid koosnevad seitsmest alamülesandest: 
 
-1. [Keskkonna ettevalmistus](1/readme.md)
+1. [Kubernetesega tutvumine ja keskkonna ettevalmistus](1/readme.md)
 2. [Kubernetes Pods](2/readme.md)
 3. [Deployments (Juurutused)](3/readme.md)
 4. [Teenuste (services) loomine ja haldus](4/readme.md)
 5. [Andmete haldus](5/readme.md)
 6. [Konfiguratsioonide ja saladuste haldus](6/readme.md)
-7. [Teenuste valmisoleku ning elusoleku kontrollimine](7/readme.md)
+7. [Teenuste valmisoleku ning elusoleku kontroll](7/readme.md)
 
 
 ---
