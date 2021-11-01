@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+spec:
+  containers:
+  - name: linux
+    image: ubuntu
+    command: ['sh', '-c', 'apt update && apt -y install procps net-tools wget curl iputils-ping dnsutils && sleep 360000']

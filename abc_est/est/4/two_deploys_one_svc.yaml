@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: multideploy
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: alternative
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    myappname: myapp
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: aaa-nginx
+  name: aaa
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: aaa-nginx
+  template:
+    metadata:
+      labels:
+        app: aaa-nginx
+        myappname: myapp
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        imagePullPolicy: Always
+        name: hello
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bbb-nginx
+  name: bbb
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: bbb-nginx
+  template:
+    metadata:
+      labels:
+        app: bbb-nginx
+        myappname: myapp
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        imagePullPolicy: Always
+        name: hello
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 3
+
