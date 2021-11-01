@@ -5,8 +5,8 @@ Selle praktilise osa läbi tegemiseks on vaja järgnevaid tööriistu:
 - Brauser (näiteks: Chrome)
 
 Ülesannete lahendamiseks kasutame veebis asuvat keskkonda.  
-Kubernetese klastri Rancheri veebiliises asub aadressil https://rp-rancher.opnd.eu, klasteri nimi on **rp-training-k8s**  
-PS! Siit saab tõmmata ka Kubeconfig faili, kui on soob teha ülesanne läbi oma arvutis oleva kubectl tarkvara abil. 
+Kubernetese klastri Rancheri veebiliises asub aadressil https://rp-rancher.opnd.eu, klasteri nimi on **rp-training-k8s**. Ligipääsu info küsige töötoa läbi viija käest. 
+PS! Sealt saab tõmmata ka Kubeconfig faili, kui on soob teha ülesanne läbi oma arvutis oleva kubectl tarkvara abil. 
 
 # Kubernetese sissejuhatus 
 
