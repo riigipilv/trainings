@@ -136,6 +136,9 @@ k delete deployment --all
 k delete svc --all
 ```
 
+[Järgmine ülesanne](/abc_est/6/readme.md)  
+[Tagasi algusesse](/abc_est/readme.md)  
+
 *Pelle Jakovits (2021)*  
 *Martin Vool, Entigo (2020)*  
 *MIT License, https://opensource.org/licenses/MIT*  
