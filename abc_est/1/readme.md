@@ -38,17 +38,14 @@ cat ~/.kube/config
 ### 4) Uue nimeruumi loomine
 
 Loome nüüd endale uue isikliku nimeruumi, mis aitab meil hoida selle treeningu ajal loodud resursid eraldatud keskkonnas.  
-Nimeruumi nimeks paneme oma eesnime-perenime. Hea oleks igaks juhuks vältida täpitähtede kasutamist. 
-
-Nimeruumi loomise käsk on: 
-
-```
-kubectl create ns <firstname-lastname>
-```
+Nimeruumi loomiseks peaks Kubernetese klustri veebilehe kaudu minema **Projects/Namespaces** lehele.  
+Nimeruumi nimeks paneme oma eesnime-perenime. Hea oleks igaks juhuks vältida täpitähtede kasutamist.  
 
 ### 5) Konteksti vahetamine
 
-Selleks, et automaatselt kasutada järgnevates ülesannetes meie uut nimeruumi, loome uue ajutise (alias) käsu, mis sisaldab nimeruumi väärtust: 
+Selleks, et automaatselt kasutada järgnevates ülesannetes meie uut nimeruumi, loome uue ajutise (alias) käsu **k**, mis sisaldab **kubectl** käsku ning ka nimeruumi väärtust: 
+
+**NB! Kindlasti muutke ära firstname ja lastname õigeteks väärtusteks**
 
 ```
 alias k='kubectl -n firstname-lastname'
@@ -57,6 +54,8 @@ alias k='kubectl -n firstname-lastname'
 Näiteks:  ```alias ='kubectl -n pelle-jakovits'```
 
 Ning järgnevates ülesannetes kasutame **kubectl** käsu asemel **k** käsku. 
+
+**NB! **
 
 *PS! Nimeruumi saaks tavaliselt konfigureerida käsu ```kubectl config set-context --current --namespace=<firstname-lastname>``` abil, aga Rancheri veebi konsoolis see käsk ei tööta.*
 
