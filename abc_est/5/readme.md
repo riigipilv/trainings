@@ -2,9 +2,9 @@
 
 Kubernetese Köide (Volume) teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale Pod'i kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga köidete abil on võimalik haakida külge ka configmap'ides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
 
-Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete kõiteid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
+Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete köiteid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
  
-### 1) Empty Dir tüüpi kõited (volumes)
+### 1) Empty Dir tüüpi köited (volumes)
 
 Liigume ülesande kausta ning vaatame **empty_dir.yaml** faili sisu: 
 
@@ -15,7 +15,7 @@ cat ~/5/empty_dir.yaml
 
 Selles failis on kirjeldatud juuruts ühe teenuse ja kahe Podiga. Iga Pod sisaldab kahte konteinerit ning köidet (volume) nimega **test**, mille tüübiks on **emptyDir**.
 
-Nginxi konteineris on see kõide ühendatud (mounted) kausta **/usr/share/nginx/html** ja ubuntu konteineriis kausta **/busy** alla. 
+Nginxi konteineris on see köide ühendatud (mounted) kausta **/usr/share/nginx/html** ja ubuntu konteineriis kausta **/busy** alla. 
 Pöörake tähelepanu ubuntu podide käivituskäsule. See loob index.html faili **/busy** kausta, mis sisaldab Podi nimeruumi väärtust, Töötaja masina (Worker Node) hostinime ja Podi nime.
 
 laseme Kubernetesel selle Juurutuse tööle panna:  
@@ -61,7 +61,7 @@ curl emptydir
 ```
 
 Näete erinevaid sõnumeid olenevalt sellest, millisele Pod'ile päring saadeti.  
-EmptyDir tüüpi kõide (Volume) jagatakse nginxi ja ubuntu konteinerite vahel – nii saab nginx teenindada faili index.html ja ubuntu konteiner selle sisu muuta.  
+EmptyDir tüüpi köide (Volume) jagatakse nginxi ja ubuntu konteinerite vahel – nii saab nginx teenindada faili index.html ja ubuntu konteiner selle sisu muuta.  
 Seda ei jagata erinevate Pod'ide vahel – isegi kui need juhtuvad töötama samas Kubernetese serveris.  
 
 Kustutage esimene  emptydir pod ja uuride uuesti Pod'ide nimekirja: 
@@ -89,7 +89,7 @@ See näitab, et emptyDir köide (volume) elab üle konteineri taaskäivitamise.
 
 See näitab, et kui kasutate emptyDir tüüpi köiteid, sii ei tohiks eeldada, et see on konteineri käivitamisel alati tühi. 
 
-### 2) Host path tüüpi kõited (volumes)
+### 2) Host path tüüpi köited (volumes)
 
 Vaadake järgneva juurutuse (deployment) konfiguratsiooni. 
 ```
@@ -125,7 +125,7 @@ k get pods -o wide
 
 Jooksutage uuesti curl käsku client Pod sees. 
 
-**Hostpath** tüüpi kõidete kasutamine on lihtsaim viis andmete püsivaks salvestusek, kuna need salvestatakse väljaspool konteinereid. Samas peaksite veenduma, et Pod käivitataks alati sama Kubernetese serveri peal, et hoolitseda et see pääseb alati samadele andmetele ligi.   
+**Hostpath** tüüpi köidete kasutamine on lihtsaim viis andmete püsivaks salvestusek, kuna need salvestatakse väljaspool konteinereid. Samas peaksite veenduma, et Pod käivitataks alati sama Kubernetese serveri peal, et hoolitseda et see pääseb alati samadele andmetele ligi.   
 Negatiivne külg on aga see, et kui server rikki läheb, siis nendele andmetele ei pruugi enam ligi pääseda. 
 
 
