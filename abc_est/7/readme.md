@@ -18,7 +18,7 @@ Konteineris on lisaks ka teenuse valmisoleku (readiness) ja teenuse elusoleku (l
 Teenus on valmis (ready) olekus  (st. valmis serveerima sisse tulevaid päringuid) kui see vastab GET päringule 3 sekundit peale käivitumist ja seejärel iga sekund.  
 Teenus on elus (live) olekus, kui GET päring annab vastuseid 10 sekundit pärast käivitamist ja seejärel iga 5 sekundi tagant. Samuti peab see 3 korda järjest ebaõnnestuma, enne kui see määratakse katkiseks (failed). Kui konteiner määratakse katkiseks, siis tehakse konteinerile automaatselt taaskäivitus.
 
-Peale piisava aja müüdumise peaksid kõik Pod'id olema terves (healthy) staatuses!
+Peale piisava aja möödumise peaksid kõik Pod'id olema terves (healthy) staatuses!
 
 Ühest eelmisest ülesandest peaks teil alles olema **client** Pod. 
 Veenduge, et teil on **kliendi** Pod alles: 
