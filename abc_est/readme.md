@@ -16,7 +16,7 @@ Kubernetes põhineb Google Borgi kontseptsioonil (2003-2004) ning selle esimene 
 See on mõeldud keskmiste ja suurte süsteemide juurutuste jaoks. Sellel on väga suur arendajate baas ja arendamise aktiivsus. Iga 3 kuu tagant ilmub uus väljalase. Kubernetes pakub raamistikku hajutatud süsteemide vastupidavaks haldamiseks kasutades konteinerite tehnoloogiat. See hoolitseb konteineritena üles seatud rakenduste skaleerimise ja tõrke-järgse taastamise eest ning pakub erinevaid viise rakenduste üles seadmise automatiseerimiseks.  
 
 Mõned Kubernetese kõige huvitavamad funktsionaalsused:
-- **Automaatne levitamine (rollout) ja tagasipööramine (rollback):** Saab kirjeldada konteinerite soovitud olekut ja Kubernetes hoolitseb selle eest, kuidas seda olekut saavutada vajaliku kiirusega.  
+- **Automaatne väljalaskmine (rollout) ja tagasipööramine (rollback):** Saab kirjeldada konteinerite soovitud olekut ja Kubernetes hoolitseb selle eest, kuidas seda olekut saavutada vajaliku kiirusega.  
 - **Iseparanevad teenused:** Kubernetes taaskäivitab ebaõnnestunud konteinerid ja tapab ning asendab konteinerid, mis ei reageeri kasutaja poolt määratud elusoleku kontrollile. Konteinereid ei tehta klientidele kätte saadavaks enne, kui need on teenindamiseks valmis.
 - **Saladuste ja konfiguratsioonihaldus:** Kubernetes võimaldab turvaliselt salvestada ja hallata tundlikku teavet, nagu paroolid, OAuthi tokenid ja SSH-võtmed. Saab värskendada saladusi ja rakenduse konfiguratsiooni ilma konteinerit uuesti ehitamata. 
 
