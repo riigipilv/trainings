@@ -42,13 +42,13 @@ Korrakse seda mitu korda ning uurige, mis infot see väljastab.
 exit
 ```
 
-Nüüd logige sisse mõlemasse podi ning muutke ära HTML faili sisu uue tekstiga:
+Nüüd logige sisse mõlemasse podi ning lisame HTML faili sisu uue tekstiga:
 
 ```
-k exec -it <first pod> -c ubuntu bash
+k exec -it <first pod name> -c ubuntu bash
 echo "I am pod one" >> /busy/index.html
 exit
-k exec -it <second pod> -c ubuntu bash
+k exec -it <second pod name> -c ubuntu bash
 echo "I am pod two" >> /busy/index.html
 exit
 ```
