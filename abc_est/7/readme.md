@@ -1,21 +1,21 @@
-# Kubernetes ABC - Ülesanne 7
+# Kubernetes ABC - Ülesanne 7: Teenuste valmisoleku ning elusoleku kontroll
 
-### 1) Liveliness and Readiness
+Selles ülesandes vaatame kuidas saab Kubernetese juurutustesse sisse konfigureerida teenuste valmisoleku ja elusoleku kontrolle ning kuidas Kubernetese platvorm neid kasutab teenuste automaatseks parandamiseks. 
 
+### 1) Valmisolek (Readiness) ja Liveliness ()
 
-Selles ülesandes kasutame juurutust (Deployment), mis käivitab konteineri, mis suure tõenäosusega ei käivitu korrektselt – selle sees jooksev nginx teenus on valesti seadistatud ning ei käivitu. 
+Selles ülesandes kasutame juurutust (Deployment), mis käivitab Pod'i, mis suure tõenäosusega ei käivitu korrektselt – selle sees jooksev nginx teenus on valesti seadistatud ning ei käivitu. 
 
-Uurige selle deployment sisu: 
+Uurige selle deployment'i sisu: 
 
 ```
 cd ~/7
 cat liveandready.yaml
 ```
 
-Konteineris on lisaks ka teenuse valmisoleku (readiness) ja teenuse tervise (liveliness) kontollid (probes)!
+Konteineris on lisaks ka teenuse valmisoleku (readiness) ja teenuse elusoleku (liveliness) kontollid (probes)!
 
 Teenus on valmis (ready) olekus - st. valmis serveerima sisse tulevaid päringuid, kui see vastab GET päringule 3 sekundit peale käivitumist ja seejärel iga sekund.  
-
 Teenus on elus (live) olekus, kui GET päring annab vastuseid 10 sekundit pärast käivitamist ja seejärel iga 5 sekundi tagant. Samuti peab see 3 korda järjest ebaõnnestuma, enne kui see määratakse katkiseks (failed). Kui konteiner määratakse katkiseks, siis tehakse konteinerile automaatselt taaskäivitus.
 
 Peale piisava aja müüdumise peaksid kõik Pod'id olema terves (healthy) staatuses!
@@ -54,18 +54,16 @@ Käivitage jälgimise skript:
 ./monitor.sh
 ```
 
-
 Jälgige, kuidas jooksvate Pod'ide olukord muutub. 
 
-Mõned Pod'id ei saa valmis (ready) oleku staatuse märget, kuna valmisolek ebaõnnestub ja mõne aja pärast lülitub elavuse kontroll sisse ja taaskäivitab konteineri.
+Mõned Pod'id ei saa valmisoleku (ready) staatuse märget, kuna valmisoleku kontroll ebaõnnestub ja mõne aja pärast lülitub elusoleku kontroll sisse ja taaskäivitab konteineri.
 
-Kui üks konteiner Pod'i sees ei ole valmis, siis pole ka terved Pod'id valmis olekus. 
-Pod peab olema valmis olekus selleks, et osaleda Kubernetese Teenuse (Service) töös. 
-Kui Pod'i sees on mitu konteinerit, siis taaskäivitatakse ainult see konteiner, mis on rikkis.
+Kui üks konteiner Pod'i sees ei ole valmis, siis pole ka terved Pod'id valmis olekus.  
+Pod peab olema valmis olekus selleks, et osaleda Kubernetese Teenuse (Service) töös.  
+Kui Pod'i sees on mitu konteinerit, siis taaskäivitatakse ainult see konteiner, mis on rikkis.  
 
-Terviseproovid käivitatakse **worker node** poolt, milles pod töötab, mitte **Master Node** poolt. 
+Elusoleku proovid käivitatakse **worker node** poolt, milles pod töötab, mitte **Master Node** poolt. 
 Kuid teenuse lõpp-punktid sõltuvad **Master Node** API-st – Kui **Master Node** ei tööta korralikult, siis teenuste olukorda ei uuendata. 
-
 
 
 ### 2) Puhastage ülesande keskkond
