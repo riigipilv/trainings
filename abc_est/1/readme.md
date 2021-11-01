@@ -72,7 +72,8 @@ Samad materjalid on kätte saadavad siin: https://github.com/riigipilv/trainings
 
 **NB:** Kui see Rancher konsool kinni panna (või kui see automaatselt ise kinni läheb), siis tuleb sammud 5 ja 6 (nimeruumi seadistamine ning failide alla tõmbamine ja lahti pakkimine) uuesti teha, kuna muudatused lähevad kaduma!
 
-
+[Järgmine ülesanne](/abc_est/2/readme.md)  
+[Tagasi algusesse](/abc_est/readme.md)  
 
 
 *Pelle Jakovits (2021)*  
