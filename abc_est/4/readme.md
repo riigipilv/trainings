@@ -1,6 +1,8 @@
 # Kubernetes ABC - Ülesanne 4: Teenuste (services) loomine ja haldus
 
+Vaikimisi on podid kättesaadavad vaid klastri siseselt. Kubernetese teenus (Service) on objekt, mis teeb sobivate siltidega (label) varustatud Pod'ide kogumiku kättesaadavaks ka klastrist väjaspool ning pakub võrgukoormuse jaotajat, et jagada koormut Pod'ide vahel ühtlaselt. Näiteks saame teha port 80 pealt kättesaadavaks kõik Podid, mis kuulavad TCP porti 9376 ning on varustatud labeliga app=MyApp. 
 
+Selles ülesandes vaatame kuidas Kubernetese teenuseid luua kuidas Pod'ide kuulumist teenustesse määratakse siltide (labels) panemise kaudu.  
 
 ### 1) Loome kaks Deployment'i ja ühe kliendi Pod'i.
 
