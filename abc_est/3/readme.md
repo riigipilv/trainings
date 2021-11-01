@@ -1,4 +1,7 @@
-# Kubernetes ABC - Ülesanne III: 
+# Kubernetes ABC - Ülesanne III: Kubernetese Juurutused (Deployments) 
+
+Kubernetese Juurutused (Deployments) võimaldavad defineerida pode, seadistada neile labeleid ning määrata korraga käivitatavate podide arvu (Replica Set).  
+Selle ülesande käigus vaatame kuidas juurutusi luua, neid hallata ning kuidas skaleerida jooksvalt podide ja konteinerite arvu juurutuse "sees". 
 
 ### 1) Üks viis juurutuse (Deployment) loomiseks on otse kubectli käsu abil.
 
@@ -6,7 +9,7 @@
 kubectl create deployment nginxa --image=nginxdemos/hello
 ```
 
-Nii nagu Pod'ide puhul, saab kasutada **get** ja **describe** käsku deployment info vaatamiseks: 
+Nii nagu Pod'ide puhul, saab kasutada **get** ja **describe** käske deployment info vaatamiseks: 
 
 ```
 kubectl get deploy
@@ -16,7 +19,7 @@ kubectl get pods -o wide
 
 ### 2) Teine viis on vajaliku info edastamine YAML (or json) formaadis: 
 
-Vaata näidet deployment.yaml failis:
+Vaatame näidet deployment.yaml failis:
 
 ```
 cat ~/3/deployment.yaml
@@ -34,7 +37,7 @@ kubectl get pods -o wide
 ```
 
 Oodake, kuni kõik pod'id on valmis (Ready) olekus. 
-Peaks märkama, et teine ​​juurutus tekitas 3 Pod'i, see on määratud yamli failis, välja: **replicas** väärtuse tõttiu. 
+Peaks märkama, et teine juurutus tekitas 3 Pod'i. See onnii  määratud yaml failis, välja: **replicas** väärtuse kaudu. 
 
 ### 3) Juurutuste skaleerimine:
 
@@ -45,9 +48,7 @@ kubectl get pods
 kubectl get deployment
 ```
 
-If you need to disable a deployment, you can scale it to 0 too.
-
-Juurutust saab ka "välja lülitada" skaleerides selle replikaatide väärtuse 0'ks. 
+Juurutust saab ka "välja lülitada" skaleerides selle replikaatide arvu 0'ks. 
 
 ```
 kubectl scale deployment nginx-yaml --replicas=0
@@ -61,7 +62,7 @@ kubectl get deployment
 kubectl describe deploy nginx-yaml
 ```
 
-Uurige ka logisid. 
+Uurige ka Pod'ide logisid. 
 
 
 ### 4) Juurutuse kustutamine 
@@ -70,7 +71,7 @@ Uurige ka logisid.
 kubectl delete deploy nginx-yaml
 ```
 
-Vaadake Pod'ide infot, et näga kas kustutamine õnnestus:
+Vaadake Pod'ide infot, et näha kas nende kustutamine õnnestus:
 
 
 ```
@@ -78,17 +79,16 @@ kubectl get pods
 kubectl get deployment
 ```
 
-Selle tulemusel eemaldatakse ka juurutuse pod'id.
+Juurutuse kustutamise tulemusena eemaldatakse ka kõi juurutuse pod'id.
 
 
 ### 5) Juurutamise teel loodud podi kustutamine.
 
-vaatame hetkel jooksvaid pod'e: 
+Vaatame hetkel jooksvate pod'ide nimekirja: 
 
 ```
 kubectl get pods
 ```
-
 
 Valige üks suvaline pod ja kustutage see. Järgnevasse käsku kopeerige ühe podi nimi eelmisese käsu väljundist: 
 
@@ -102,8 +102,7 @@ Uurige podide infot uuesti:
 kubectl get pods
 ```
 
-You should see that a new replacement pod is launched.
-Peaks märkama, et kustutatud podi asemel loodi automaatselt uus pod, selleks, et hoida juurutuses märgitud podide arv stabiilne. 
+Peaks märkama, et kustutatud Pod'i asemel loodi automaatselt uus pod, selleks, et hoida juurutuses märgitud podide arv stabiilne. 
 
 ### 6) Puhastame ülesande keskkonna
 
