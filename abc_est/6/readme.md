@@ -118,6 +118,8 @@ k delete sts --all
 k delete cm --all
 ```
 
+ 
+[Tagasi algusesse](/abc_est/readme.md)  
 
 *Pelle Jakovits (2021)*  
 *Martin Vool, Entigo (2020)*  
