@@ -5,15 +5,15 @@
 ### 1) Loome kaks Deployment'i ja ühe kliendi Pod'i.
 
 ```
-kubectl create deployment a --image=nginxdemos/hello:plain-text
-kubectl create deployment b --image=nginxdemos/hello:plain-text
+k create deployment a --image=nginxdemos/hello:plain-text
+k create deployment b --image=nginxdemos/hello:plain-text
 ```
 
 Skaleerime mõlema deployment'i replikaatide arvu 3 peale: 
 
 ```
-kubectl scale deployment a --replicas=3
-kubectl scale deployment b --replicas=3
+k scale deployment a --replicas=3
+k scale deployment b --replicas=3
 ```
 
 Meil on nüüd kaks Deployment'i, mis sisaldavad Pod'e, kus igaühes jookseb nginx veebiserver pordi 80 peal. 
@@ -31,8 +31,8 @@ cat ~/4/client.yaml
 Loome kliendi Pod'i: 
 
 ```
-kubectl create -f client.yaml
-kubectl get pods -o wide
+k create -f client.yaml
+k get pods -o wide
 ```
 
 
@@ -42,15 +42,15 @@ kubectl get pods -o wide
 Teenuseid (Services) saab luua ```kubectl expose``` käsu abil. 
 
 ```
-kubectl expose deployment/a --port 80
-kubectl get svc -o wide
+k expose deployment/a --port 80
+k get svc -o wide
 ```
 
 Pange tähele klastri IP aadressi. See on teisest võrgu aadresside vahemikust kui Pod'ide IP aadressid.
 
 ```
-kubectl get ep -o wide
-kubectl get pods -o wide
+k get ep -o wide
+k get pods -o wide
 ```
 
 Pange tähele, et **ENDPOINTS** on need samad IP aadressid, mis on Pod'idel, mis sellele teenusele kuuluvad.  
@@ -59,7 +59,7 @@ Lõpp-punktid (endpoints) on need aadressid, kuhu võrguliikluse koormusejaotur 
 Sellele teenusele juurde pääsemiseks kasutame varasemalt loodud kliendi Pod'i:
 
 ```
-kubectl exec -it client bash 
+k exec -it client bash 
 cat /etc/resolv.conf
 ```
 
@@ -90,15 +90,15 @@ cat cluster_ip_svc.yaml
 Kontrollige faili. Palun pöörake tähelepanu **selector** välja väärtusele. 
 
 ```
-kubectl create -f cluster_ip_svc.yaml
-kubectl get svc -o wide
+k create -f cluster_ip_svc.yaml
+k get svc -o wide
 ```
 
 Pange tähele, et igal teenusel on unikaalne IP-aadress.
 
 ```
-kubectl get ep -o wide
-kubectl get pods --show-labels
+k get ep -o wide
+k get pods --show-labels
 ```
 
 Teenus valib Pod'id sildi valija (label selector) alusel; kõigil **b** Deployment Pod'idel on silt (label) **app=b**. 
@@ -109,7 +109,7 @@ Samuti võib teenuse nimi olla vabalt valitud – aga levinud tava on jätta tee
 
 
 ```
-kubectl exec -it client bash
+k exec -it client bash
 nslookup ngninxa-clusterip
 curl ngninxa-clusterip
 ```
@@ -135,16 +135,16 @@ Podide mallis on lisaks **aaa** kui ka **bbb** siltidele veel üks silt: **myapp
 
 
 ```
-kubectl create -f two_deploys_one_svc.yaml
-kubectl get svc multideploy  -o wide
+k create -f two_deploys_one_svc.yaml
+k get svc multideploy  -o wide
 ```
 
 Pange tähele, et sellel on nüüd kaks porti. Pange tähele ka "selector" silte (label).
 
 ```
-kubectl describe ep multideploy
-kubectl get pods --show-labels -l myappname=myapp
-kubectl exec -it client bash
+k describe ep multideploy
+k get pods --show-labels -l myappname=myapp
+k exec -it client bash
 curl multideploy
 ```
 
@@ -166,8 +166,8 @@ exit
 ### 4) Puhastame ülesande keskkonna
 
 ```
-kubectl delete deployment --all
-kubectl delete svc --all
+k delete deployment --all
+k delete svc --all
 ```
 
 *Martin Vool, Entigo* </br>
