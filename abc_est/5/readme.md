@@ -1,6 +1,6 @@
 # Kubernetes ABC - Ülesanne 5: Andmete haldus 
 
-Volume teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale podi kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga volumete abil on võimalik haakida külge ka configmapides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
+Kubernetese Köide (Volume) teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale Pod'i kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga köidete abil on võimalik haakida külge ka configmap'ides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
 
 Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete kõiteid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
  
