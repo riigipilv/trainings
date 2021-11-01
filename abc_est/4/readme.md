@@ -170,5 +170,6 @@ k delete deployment --all
 k delete svc --all
 ```
 
-*Martin Vool, Entigo* </br>
-*MIT License, https://opensource.org/licenses/MIT*
+*Pelle Jakovits (2021)*  
+*Martin Vool, Entigo (2020)*  
+*MIT License, https://opensource.org/licenses/MIT*  
