@@ -1,6 +1,6 @@
 #!/bin/bash
 
-namespace="pelle-jakovits"
+namespace=$1 
 
 kubectl -n ${namespace} cp how_many_pods.sh client:/how_many_pods.sh
 
