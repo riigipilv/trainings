@@ -1,4 +1,4 @@
-# Kubernetes ABC - Ülesanne I: Kubernetesega tutvumine
+# Kubernetes ABC - Ülesanne I: Kubernetesega tutvumine ja keskkonna ettevalmistus
 
 ### 1) Logi sisse Kubernetese veebiliidese (Rancher) kaudu
 
