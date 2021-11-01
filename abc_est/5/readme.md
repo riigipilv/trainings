@@ -67,7 +67,7 @@ Seda ei jagata erinevate Pod'ide vahel – isegi kui need juhtuvad töötama sam
 Kustutage esimene  emptydir pod ja uuride uuesti Pod'ide nimekirja: 
 
 ```
-k delete pod <first emptydir pod
+k delete pod <first emptydir pod>
 k get pods -o wide
 ```
 
