@@ -21,8 +21,8 @@ Kasutame **mariadb-config.yaml** faili, et luua  konfiguratsiooni objektid ja ko
 
 
 ```
-kubectl create -f mariadb-config.yaml
-kubectl get configmap
+k create -f mariadb-config.yaml
+k get configmap
 ```
 
 ### 2) Saladuste loomine. 
@@ -31,9 +31,9 @@ Saladusi ei tohiks defineerida YAML failidena, kuna see võib lihtsasti lekitada
 Saladusi loome jooksvalt: 
 
 ```
-kubectl create secret generic mysql-secret --from-literal=MYSQL_PASSWORD=Love --from-literal=MYSQL_ROOT_PASSWORD=Password1
-kubectl get secret mysql-secret 
-kubectl get secret mysql-secret -o yaml
+k create secret generic mysql-secret --from-literal=MYSQL_PASSWORD=Love --from-literal=MYSQL_ROOT_PASSWORD=Password1
+k get secret mysql-secret 
+k get secret mysql-secret -o yaml
 ```
 
 
@@ -53,19 +53,19 @@ Samuti on olemas uut tüüpi Volume: **configMap** – see võimaldab konfigurat
 Loome StatefulSet faili mariadb.yaml abil.
 
 ```
-kubectl create -f mariadb.yaml
+k create -f mariadb.yaml
 ```
 
 Uurige loodud Pod'e:
 
 ```
-kubectl get pods
+k get pods
 ```
 
 Uurime ka loodud pod'ide logisid:
 
 ```
-kubectl logs mariadb-0 -f
+k logs mariadb-0 -f
 ```
 
 Oodake kuni näete infot konteineri käivituse kohta ning seejärel vajutage konsooli vabastamiseks klahvikombinatsiooni **ctrl+c**.
@@ -73,7 +73,7 @@ Oodake kuni näete infot konteineri käivituse kohta ning seejärel vajutage kon
 Nüüd liigume konteiner sisse, et vaadata uurida kuidas varasemalt defineeritud konfiguratsiooni muutujad on arvesse võetud konteineri sees: 
 
 ```
-kubectl exec -it mariadb-0 bash
+k exec -it mariadb-0 bash
 ls -l /etc/mysql/mariadb.conf.d/
 cat /etc/mysql/mariadb.conf.d/custom.cnf
 env | grep MYSQL
@@ -114,8 +114,8 @@ exit
 ### 4) Ülesande keskkonna puhastamine 
 
 ```
-kubectl delete sts --all
-kubectl delete cm --all
+k delete sts --all
+k delete cm --all
 ```
 
 
