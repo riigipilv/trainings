@@ -1,6 +1,6 @@
 # Kubernetes ABC - Ülesanne 6: Konfiguratsioonide ja saladuste haldus
 
-Selles ülesandes vaatame kuidas saab kasutada Kubernetese konfiguratsiooni kaarte (Config Map) ja saladusi (Secrets) selleks, et dünaamilist infot salvestada. 
+Selles ülesandes vaatame kuidas saab kasutada Kubernetese konfiguratsiooni kaarte (Config Map) ja saladusi (Secrets) selleks, et dünaamiliselt defineerida konteineri siseste keskkonna muutujate või konfiguratsioonifailide sisu ilma, et peaks konteinerit ümber ehitama. 
 
 ### 1) Konfiguratsiooni kaartide loomine
 
