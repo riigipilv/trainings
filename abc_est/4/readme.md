@@ -37,6 +37,13 @@ k create -f client.yaml
 k get pods -o wide
 ```
 
+Installeerimine client Pod'i lisa tarkvara
+
+```
+k exec -it client bash 
+apt update && apt -y install curl procps net-tools netcat
+exit
+```
 
 
 ### 2) ClusterIP teenus (service)
@@ -163,6 +170,8 @@ Näete **Server address** väljal, et Pod'is on seadistatud port 80.
 ```
 exit
 ```
+
+PS! Selleks, et teha meie poolt üles seatud teenused kätte saadavaks ka väljaspoolt Kubernetese klastrit, tuleks luua ka Kubernetese Ingress'i objekt. Seda me selle töötoa raames ei tee, aga huvi korral saate uuride eraldi, kuidas see töötab.  
 
 
 ### 4) Puhastame ülesande keskkonna
