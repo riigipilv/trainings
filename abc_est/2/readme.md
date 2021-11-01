@@ -4,7 +4,8 @@ Pod on väikseim ja olulisim Kubernetese klastri üksus. Pod koosneb ühest või
 
 ### 1) Loome oma esimese Pod'i
 
-```cd ~/2
+```
+cd ~/2
 cat ~/2/first_pod.yaml
 k create -f first_pod.yaml 
 k get pods
