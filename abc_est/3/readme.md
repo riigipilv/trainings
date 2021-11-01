@@ -110,6 +110,10 @@ Peaks märkama, et kustutatud Pod'i asemel loodi automaatselt uus pod, selleks, 
 k delete deploy --all
 ```
 
+[Järgmine ülesanne](/abc_est/4/readme.md)  
+[Tagasi algusesse](/abc_est/readme.md)  
+
+
 *Pelle Jakovits (2021)*  
 *Martin Vool, Entigo (2020)*  
 *MIT License, https://opensource.org/licenses/MIT*  
