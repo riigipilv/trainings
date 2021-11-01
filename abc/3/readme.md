@@ -22,29 +22,34 @@ You could then have two contexts - one where you are the admin in the cluster, a
 In a similar way you could have 1 authentication but two clusters. 
 At a time, you are active in one context - but it is easy to switch between them.
 
-> $ kubectl config get-contexts
+```kubectl config get-contexts```
+
 Currently you have defined 1 context.
 
 This command simply shows what is in the file  ~/.kube/config
-> $ cat ~/.kube/config
+
+```cat ~/.kube/config```
 
 ### 4) Create a namespace
 
 Replace <firstname-lastname> with your name. You can use something other than your name too, but it will make it harder for us to help you if you need it.
 
-> $ kubectl create ns <firstname-lastname>
+```kubectl create ns <firstname-lastname>```
 
 
 ### 5) Switch your context to that namespace
 In order to have our own corner for the labs we will use our own namespace.
 
 
-> $ kubectl config set-context --current --namespace=<firstname-lastname>
-> $ kubectl config get-contexts
-
+```kubectl config set-context --current --namespace=<firstname-lastname>
+kubectl config get-contexts
+```
+  
 ### 6) Download and extract the lab files.
-> $ curl -o abc.tar.gz http://abc.entigo.dev/abc.tar.gz
-> $ tar xvzf abc.tar.gz
+  
+```curl -o abc.tar.gz http://abc.entigo.dev/abc.tar.gz
+tar xvzf abc.tar.gz
+```
 
 The same materials can be obtained from: https://github.com/riigipilv/trainings/tree/master/abc
 

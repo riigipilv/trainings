@@ -2,8 +2,11 @@
 
 ### 1) Liveliness and Readiness
 
-> $ cd ~/9
-> $ cat liveandready.yaml
+```
+cd ~/9
+cat liveandready.yaml
+```
+
 This is a deployment that most of the time launches a broken pod - the nginx service never starts up on it. <br/>
 But the container has a readiness and liveliness probe!
 
@@ -16,7 +19,10 @@ From the last lab you should stil have **client** pod. If you don't have it for 
 Please make sure you do have the **client** pod.
 
 Check that you have the client pod.
-< $ kubectl get pods
+
+```
+kubectl get pods
+```
 
 In order to better monitor the pods and services a helper script is added to this lab.
 
@@ -26,13 +32,24 @@ It is made of two parts:
 **monitor.sh** - will copy the how\_many\_pods.sh to the client pod and then execute it until it sees all 5 pods giving answers. It will also show get pods and service endpoints.
 
 Inspect the scripts
-> $ cat how_many_pods.sh
-> $ cat monitor.sh
+
+```
+cat how_many_pods.sh
+cat monitor.sh
+```
 
 Launch the liveandready service and deployment.
-< $ kubectl create -f liveandready.yaml
+
+```
+kubectl create -f liveandready.yaml
+```
+
 Run the monitoring script:
-> $ ./monitor.sh
+
+```
+./monitor.sh
+```
+
 
 Observe how the pods are changing.
 
@@ -48,8 +65,11 @@ But the endpoints in a service depend on the master's API - **if the master is d
 
 
 ### 2) Clean up the lab
-> $ kubectl delete deployment --all
-> $ kubectl delete svc --all
+
+```
+kubectl delete deployment --all
+kubectl delete svc --all
+```
 
 
 *Martin Vool, Entigo* </br>
