@@ -1,4 +1,4 @@
-# Kubernetes ABC - Ülesanne 6
+# Kubernetes ABC - Ülesanne 6: Konfiguratsioonide ja saladuste haldus
 
 Selles ülesandes vaatame kuidas saab kasutada Kubernetese konfiguratsiooni kaarte (Config Map) ja saladusi (Secrets) selleks, et dünaamilist infot salvestada. 
 
@@ -8,7 +8,7 @@ Selles ülesandes vaatame kuidas saab kasutada Kubernetese konfiguratsiooni kaar
 cd ~/6
 ```
 
-Uurige faili mariadb-config.yaml sisu. 
+Uurige mariadb-config.yaml faili sisu. 
 
 ```
 cat mariadb-config.yaml
