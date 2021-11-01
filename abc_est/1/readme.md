@@ -55,7 +55,6 @@ Näiteks:  ```alias ='kubectl -n pelle-jakovits'```
 
 Ning järgnevates ülesannetes kasutame **kubectl** käsu asemel **k** käsku. 
 
-**NB! **
 
 *PS! Nimeruumi saaks tavaliselt konfigureerida käsu ```kubectl config set-context --current --namespace=<firstname-lastname>``` abil, aga Rancheri veebi konsoolis see käsk ei tööta.*
 
