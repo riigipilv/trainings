@@ -6,37 +6,37 @@ Pod on väikseim ja olulisim Kubernetese klastri üksus. Pod koosneb ühest või
 
 ```cd ~/2
 cat ~/2/first_pod.yaml
-kubectl create -f first_pod.yaml 
-kubectl get pods
+k create -f first_pod.yaml 
+k get pods
 ```
 
 Korrake viimast käsku, kuni näete, et teie pod'i staatus on STATUS=Running.
 
-```kubectl get pods -o wide```
+```k get pods -o wide```
 
 ```-o wide``` kasutatakse sageli get-käskudes, et näha rohkem infot. Podide puhul näete lisaks Podi IP aadressi ja töömasinat (Kubernetes Node), millel see töötab.
 
 Kui vajate veelgi rohkem üksikasju, saate kasutada **describe** käsku – millele saate lisada Pod nime, et kuvada ainult konkreetse Podi infot.
 
 
-```kubectl describe pod first```
+```k describe pod first```
 
 Võite küsida ka Pod'i infot yaml'i või json'i formaadis.
 
-```kubectl get pod first -o json
-kubectl get pod first -o yaml
+```k get pod first -o json
+k get pod first -o yaml
 ```
 
 Yaml ja json sisaldavad palju rohkem infot kui algne mall, mida kasutasime. 
 Ressursside loomisel peate määrama ainult nende väljade väärtused, mille vaikeväärtusesi soovite muuta.
 
-Konteineri väljundi logi saab vaatata **kubecrl logs** käsu abil, et näha mis väljundit jooksev protsess tagastab:
+Konteineri väljundi logi saab vaatata **k logs** käsu abil, et näha mis väljundit jooksev protsess tagastab:
 
-```kubectl logs first```
+```k logs first```
 
 Sarnaselt Dockerile on võimalik käivitada konteinerieid interaktiivselt: 
 
-```kubectl run -it --rm --generator=run-pod/v1 --image=ubuntu ubuntu ```
+```k run -it --rm --generator=run-pod/v1 --image=ubuntu ubuntu ```
 
 Selle käsu tulemusena liigume Rancher Kubernetes keskkona käsureast konteineri sees olevasle käsureale. 
 Konteinerist väljumiseks peaksite käivitama **exit** käsu:
@@ -47,7 +47,7 @@ Lipud **-it** ja **--rm** käituvad nagu Dockeris. **-it** tulemusena saab inter
 
 Pod'de nimekirja kuvamine: 
 
-```kubectl get pods```
+```k get pods```
 
 ### 2) Mitut konteinerit sisalduva Pod'i käivitamine
 
@@ -63,18 +63,18 @@ See on seadistatud kätte saadavaks mõlemale konteinerile, kuid erinevatesse as
 Üks konteiner on nginx veebiserver ja teine ​​on lihtsalt Debian, mis kirjutab jagatud salvestusruumi faili index.html. 
 Looge Pod kasutades faili second_pod.yaml:
 
-```kubectl create -f second_pod.yaml```
+```k create -f second_pod.yaml```
 
 Kontrollige, kas Pod'id töötavad:
 
-```kubectl get pods```
+```k get pods```
 
 Oodake, kuni konteiner läheb olekusse **Töötab**.
 
 Avage Pod'i konteineris käsurida:
 
 ```
-kubectl exec -it second bash
+k exec -it second bash
 ```
 
 Uurige konteineri sees olevat kausta, kuhu peaks tekkima index.html fail:
@@ -120,7 +120,7 @@ Debian konteinerist väljumine:
 Vaikimisi kasutab kubectl exec käsk esimest konteinerit podi konfiguratsioonist.
 Selleks, et pääseda juurde teisele, nginxi konteinerile peame selle eraldi määrama **-c** lipu abil:
 
-```kubectl exec -it second -c nginx-container bash
+```k exec -it second -c nginx-container bash
 ls -l /usr/share/nginx/html
 ls -l /usr/sbin/nginx
 apt update && apt -y install procps net-tools 
@@ -139,36 +139,36 @@ Pange tähele, et liidese IP on sama, mis Debiani konteineri puhul.
 
 Kontrollide Pod'i infot: 
 
-```kubectl get pods```
+```k get pods```
 
 Peaksite märkama, et **esimese** podi veerg **RESTARTS** suureneb. Põhjus on selles, et see käivitatakse 180-sekundilise **sleep** käsuga, mille järel see konteiner pannakse seisma. 
 Nii nagu Dockeri puhul, taaskäivitab Kubernetes protsessi konteineris.
 
-```kubectl get pod first  -o yaml | grep restartPolicy```
+```k get pod first  -o yaml | grep restartPolicy```
 
 Näete, et see on konfigureeritud alati taaskäivituma. 
 
 Nüüd kirjeldage esimest Podi: 
 
-```kubectl describe pod first```
+```k describe pod first```
 
 Oluline on märgata välja **Age** väärtust, mõnikord näitab see seda, mitu korda mingu sündmus on juhtunud.
 Pärast mõningaid taaskäivitusi kuvab pod ka oleku **CrashLoopBackOff** – seda saavad seiresüsteemid probleemide tuvastamiseks kasutada.
 
 ### 4) Pod'i kustutamine
 
-```kubectl delete pod first```
+```k delete pod first```
 
 Kontrollimine, et kustutatud Pod'i ei ole enam:
 
-```kubectl get pods```
+```k get pods```
 
 
 ### 5) Labori keskkonna puhastamine
 
 Kustutame kõik Pod'id 
 
-```kubectl delete pods --all```
+```k delete pods --all```
 
 
 *Martin Vool, Entigo* </br>
