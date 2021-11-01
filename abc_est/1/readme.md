@@ -66,6 +66,8 @@ unzip master.zip
 cp -r trainings-master/abc_est/* .
 ```
 
+(Ärge unustage "." viimase käsu lõpus)
+
 Samad materjalid on kätte saadavad siin: https://github.com/riigipilv/trainings/tree/master/abc_est
 
 **NB:** Kui see Rancher konsool kinni panna (või kui see automaatselt ise kinni läheb), siis tuleb sammud 5 ja 6 (nimeruumi seadistamine ning failide alla tõmbamine ja lahti pakkimine) uuesti teha, kuna muudatused lähevad kaduma!
