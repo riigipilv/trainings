@@ -1,7 +1,6 @@
-# Kubernetes ABC - Ülesanne 4 - Juurutused (Deployments)
+# Kubernetes ABC - Ülesanne 4: Teenuste (services) loomine ja haldus
 
-Selles ülesandes vaatame kuidas luua ja hallata Kubernetes Juurutusi (Deployments). 
-Kubernetese juurustus (Deployment) võimaldab defineerida pode, seadistada neile labeleid ning määrata korraga käivitatavate podide arvu (Replica Set). 
+
 
 ### 1) Loome kaks Deployment'i ja ühe kliendi Pod'i.
 
@@ -17,7 +16,7 @@ kubectl scale deployment a --replicas=3
 kubectl scale deployment b --replicas=3
 ```
 
-Meil on nüüd kaks Deployment'i, mis sisaldavad Pod'e, kus iga ühes jookseb nginx veebiserver pordi 80 peal. 
+Meil on nüüd kaks Deployment'i, mis sisaldavad Pod'e, kus igaühes jookseb nginx veebiserver pordi 80 peal. 
 
 ```
 cd ~/4
