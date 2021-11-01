@@ -12,7 +12,7 @@ cd ~/7
 cat liveandready.yaml
 ```
 
-Konteineris on lisaks ka teenuse valmisoleku (readyness) ja teenuse tervise (liveliness) kontollid (probes)!
+Konteineris on lisaks ka teenuse valmisoleku (readiness) ja teenuse tervise (liveliness) kontollid (probes)!
 
 Teenus on valmis (ready) olekus - st. valmis serveerima sisse tulevaid päringuid, kui see vastab GET päringule 3 sekundit peale käivitumist ja seejärel iga sekund.  
 
