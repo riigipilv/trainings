@@ -12,7 +12,7 @@ Kasutaja nimed ja paroolid jagab treeningu läbiviija treeningu alguses.
 
 Kliki "k8s-training-abc" projekti peal ning seejärel "Launch kubectl" nupul, et avada Kubernetese käsurea konsool brauseris.  
 Selles ja järgnevates ülesannetes kasutame seda konsooli Kubernetese käskude jooksutamiseks.  
-**NB! Olge ettevaatlik selle konsooli kinni panemisega. Konsooli keskkond jookseb samuti Kubernetese konteineri sees ning see kustutatakse atomaatselt, kui konsooli aken kinni panna. **
+**NB! Olge ettevaatlik selle konsooli kinni panemisega. Konsooli keskkond jookseb samuti Kubernetese konteineri sees ning see kustutatakse atomaatselt, kui konsooli aken kinni panna.**
 
 ### 3) Kubernetese konteksti (Context) objekti vaatamine
 
@@ -70,7 +70,7 @@ cp -r trainings-master/abc_est/* .
 
 Samad materjalid on kätte saadavad siin: https://github.com/riigipilv/trainings/tree/master/abc_est
 
-**NB: Kui see Rancher konsool kinni panna (või kui see automaatselt ise kinni läheb), siis tuleb sammud 5 ja 6 (nimeruumi seadistamine ning failide alla tõmbamine ja lahti pakkimine) uuesti teha, kuna muudatused lähevad kaduma! **
+**NB:** Kui see Rancher konsool kinni panna (või kui see automaatselt ise kinni läheb), siis tuleb sammud 5 ja 6 (nimeruumi seadistamine ning failide alla tõmbamine ja lahti pakkimine) uuesti teha, kuna muudatused lähevad kaduma!
 
 
 
