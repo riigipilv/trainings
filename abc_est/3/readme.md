@@ -110,5 +110,6 @@ Peaks märkama, et kustutatud Pod'i asemel loodi automaatselt uus pod, selleks, 
 k delete deploy --all
 ```
 
-*Martin Vool, Entigo* </br>
-*MIT License, https://opensource.org/licenses/MIT*
+*Pelle Jakovits (2021)*  
+*Martin Vool, Entigo (2020)*  
+*MIT License, https://opensource.org/licenses/MIT*  
