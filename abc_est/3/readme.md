@@ -3,6 +3,12 @@
 Kubernetese Juurutused (Deployments) võimaldavad defineerida Pod'ide komplekti, seadistada neile labeleid ning määrata korraga käivitatavate podide arvu (Replica Set).  
 Selle ülesande käigus vaatame kuidas juurutusi luua, neid hallata ning kuidas skaleerida jooksvalt podide ja konteinerite arvu juurutuse "sees". 
 
+Lisainfo Kubernetese dokumentatsioonis:
+- [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+
+
+
+
 ### 1) Üks viis juurutuse (Deployment) loomiseks on otse kubectl'i käsu abil.
 
 ```
