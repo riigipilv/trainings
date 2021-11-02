@@ -1,6 +1,10 @@
-# Kubernetes ABC - Ülesanne II: Kubernetes Kaunad (Pods) 
+# Kubernetes ABC - Ülesanne II: Kubernetese Pods'id 
 
 Pod on väikseim ja kõige tähtsam Kubernetese klastri üksus. Pod koosneb ühest või mitmest (Dockeri, vms.) konteinerist, kus igal Pod'il on oma unikaalne klastri sisene IP aadress, mis võimaldab rakendusel kasutada porte konfliktidevabalt. Samas, ühe Pod'i sees jagavad konteinerid lokaalvõrku, IP aadressi ning MAC aadressi, ning peavad kasutama erinevaid porte. See on sarnane sellele, kuidas mitu rakendust jooksevad ühe VM sees. 
+
+Lisainfo Kubernetese dokumentatsioonis:
+- [Kubernetes Pods](https://kubernetes.io/docs/concepts/workloads/pods/)
+
 
 ### 1) Loome oma esimese Pod'i
 
