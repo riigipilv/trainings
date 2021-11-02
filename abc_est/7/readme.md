@@ -48,10 +48,12 @@ Käivitage **liveandready** teenus ja deployment.
 k create -f liveandready.yaml
 ```
 
-Käivitage jälgimise skript:
+Andke skriptidele kävitamise õigused ning käivitage jälgimise skript, pannes selle argumendiks oma varasemalt loodud nimeruumi väärtuse (eesnimi-perenimi):
 
 ```
-./monitor.sh
+chmod u+x monitor.sh
+chmod u+x how_many_pods.sh
+./monitor.sh namespace
 ```
 
 Jälgige, kuidas jooksvate Pod'ide olukord muutub. 
