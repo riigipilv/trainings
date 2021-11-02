@@ -2,9 +2,9 @@
 
 Kubernetese volüüm (Volume) teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale Pod'i kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga volüümide abil on võimalik haakida külge ka configmap'ides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
 
-Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete köiteid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
+Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete volüümid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
  
-### 1) Empty Dir tüüpi köited (volumes)
+### 1) Empty Dir tüüpi volüümid  (volumes)
 
 Liigume ülesande kausta ning vaatame **empty_dir.yaml** faili sisu: 
 
@@ -73,7 +73,7 @@ k get pods -o wide
 
 Korrake curl käsku **client** Pod'i seest. 
 
-Väljundi põhjal peaks olema näha, et emptyDir tüüpi köite (Volume) sisu ei jää Pod'i kustutamise järel alles, kuna teie poolt muudetud sõnum pole äsja käivitatud Pod'is alles.
+Väljundi põhjal peaks olema näha, et emptyDir tüüpi volüümi sisu ei jää Pod'i kustutamise järel alles, kuna teie poolt muudetud sõnum pole äsja käivitatud Pod'is alles.
 
 Avage teise Pod'i sees käsurida ning katkestage (kill) nginx protsess. 
 
@@ -87,7 +87,7 @@ Peaksite nägema Pod'i taaskäivituste arvu suurenemist nginxi tapmise järel.
 Kui kasutate curl käsku uuesti, siisnäete, et taaskäivitatud kaustas on endiselt teie poolt muudetud sõnum.
 See näitab, et emptyDir volüüm elab üle konteineri taaskäivitamise. 
 
-See näitab, et kui kasutate emptyDir tüüpi köiteid, sii ei tohiks eeldada, et see on konteineri käivitamisel alati tühi. 
+See näitab, et kui kasutate emptyDir tüüpi volüüme, sii ei tohiks eeldada, et see on konteineri käivitamisel alati tühi. 
 
 ### 2) Host path tüüpi volüümid (volumes)
 
@@ -97,7 +97,7 @@ Vaadake järgneva juurutuse (deployment) konfiguratsiooni.
 cat host_path.yaml
 ```
 
-See on sarnane juurutus eelmisele, kuid köite (volume) tüüp on nüüd **hostpath** ja see viitab nüüd serveris olevale asukohale /mnt/hostpath, mida hakkavad jagama kõigi osalejate Pod'id, mis selles serveris jooksevad. 
+See on sarnane juurutus eelmisele, kuid volüümi tüüp on nüüd **hostpath** ja see viitab nüüd serveris olevale asukohale /mnt/hostpath, mida hakkavad jagama kõigi osalejate Pod'id, mis selles serveris jooksevad. 
 Looge juurutus faili host_path.yaml abil ja kontrollige Pod'ide infot.
 
 ```
