@@ -2,7 +2,7 @@
 
 Selles ülesandes vaatame kuidas saab Kubernetese juurutustesse sisse konfigureerida teenuste valmisoleku ja elusoleku kontrolle ning kuidas Kubernetese platvorm neid kasutab teenuste automaatseks parandamiseks. 
 
-### 1) Valmisolek (Readiness) ja Liveliness ()
+### 1) Teenuste valmisolek (Readiness) ja elusolek (Liveliness)
 
 Selles ülesandes kasutame juurutust (Deployment), mis käivitab Pod'i, mis suure tõenäosusega ei käivitu korrektselt – selle sees jooksev nginx teenus on valesti seadistatud ning ei käivitu. 
 
@@ -15,16 +15,16 @@ cat liveandready.yaml
 
 Konteineris on lisaks ka teenuse valmisoleku (readiness) ja teenuse elusoleku (liveliness) kontollid (probes)!
 
-Teenus on valmis (ready) olekus - st. valmis serveerima sisse tulevaid päringuid, kui see vastab GET päringule 3 sekundit peale käivitumist ja seejärel iga sekund.  
+Teenus on valmis (ready) olekus  (st. valmis serveerima sisse tulevaid päringuid) kui see vastab GET päringule 3 sekundit peale käivitumist ja seejärel iga sekund.  
 Teenus on elus (live) olekus, kui GET päring annab vastuseid 10 sekundit pärast käivitamist ja seejärel iga 5 sekundi tagant. Samuti peab see 3 korda järjest ebaõnnestuma, enne kui see määratakse katkiseks (failed). Kui konteiner määratakse katkiseks, siis tehakse konteinerile automaatselt taaskäivitus.
 
-Peale piisava aja müüdumise peaksid kõik Pod'id olema terves (healthy) staatuses!
+Peale piisava aja möödumise peaksid kõik Pod'id olema terves (healthy) staatuses!
 
 Ühest eelmisest ülesandest peaks teil alles olema **client** Pod. 
 Veenduge, et teil on **kliendi** Pod alles: 
 
 ```
-kubectl get pods
+k get pods
 ```
 
 Kui teil seda mingil põhjusel pole, siis kasutage käsku kubectl create -f ~/4/client.yaml et see uuesti luua. 
@@ -45,7 +45,7 @@ Käivitage **liveandready** teenus ja deployment.
 
 
 ```
-kubectl create -f liveandready.yaml
+k create -f liveandready.yaml
 ```
 
 Käivitage jälgimise skript:
@@ -69,10 +69,11 @@ Kuid teenuse lõpp-punktid sõltuvad **Master Node** API-st – Kui **Master Nod
 ### 2) Puhastage ülesande keskkond
 
 ```
-kubectl delete deployment --all
-kubectl delete svc --all
+k delete deployment --all
+k delete svc --all
 ```
 
 
-*Martin Vool, Entigo* </br>
-*MIT License, https://opensource.org/licenses/MIT*
+*Pelle Jakovits (2021)*  
+*Martin Vool, Entigo (2020)*  
+*MIT License, https://opensource.org/licenses/MIT*  
