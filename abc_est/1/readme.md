@@ -1,6 +1,6 @@
 # Kubernetes ABC - Ülesanne I: Kubernetesega tutvumine ja keskkonna ettevalmistus
 
-Selle ülesande raames vaatame kuidas ligi pääseda Kubernetese klastrile, kuidas kasutada selle veebiliidest kubernetese käsureakäskude jooksutamiseks ning laeme alla järgmiste ülesannete jaoks vajalikud failid. 
+Selle ülesande raames vaatame kuidas ligi pääseda Kubernetese klastrile, kuidas kasutada selle veebiliidest Kubernetese käsurea käskude jooksutamiseks ning laeme alla järgmiste ülesannete jaoks vajalikud failid. 
 
 
 ### 1) Logi sisse Kubernetese veebiliidese (Rancher) kaudu
@@ -38,6 +38,8 @@ cat ~/.kube/config
 ### 4) Uue nimeruumi loomine
 
 Loome nüüd endale uue isikliku nimeruumi, mis aitab meil hoida selle treeningu ajal loodud resursid eraldatud keskkonnas.  
+Lisaks ei ole praeguses keskkonnas teie kasutajal õigust vaikimisi seadistatud nimeruumi (default) kasutada.
+
 Nimeruumi loomiseks peaks Kubernetese klustri veebilehe kaudu minema **Projects/Namespaces** lehele.  
 Nimeruumi nimeks paneme oma eesnime-perenime. Hea oleks igaks juhuks vältida täpitähtede kasutamist.  
 

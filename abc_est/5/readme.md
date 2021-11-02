@@ -92,6 +92,7 @@ See näitab, et kui kasutate emptyDir tüüpi köiteid, sii ei tohiks eeldada, e
 ### 2) Host path tüüpi köited (volumes)
 
 Vaadake järgneva juurutuse (deployment) konfiguratsiooni. 
+
 ```
 cat host_path.yaml
 ```
