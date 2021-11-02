@@ -70,10 +70,10 @@ Parool on ühel inimesel kõigis teenustes sama.
 ### Koodivaramu (GitLab) kasutamine
 
 * Mine aadressile https://gitlab.kratt.ai
-* Logi sisse eelnevalt saadud kontoga
+* Logi sisse eelnevalt saadud kontoga (kasutajanime formaat: `cicd-user-0X`)
 * Loo omale unikaalse nimega grupp - see on ainult sinu jaoks.
     * Loomise käigus küsitakse erinevaid küsimusi, valesid vastuseid siin ei ole.
-* Loo grupi sisse endale piisavalt unikaalse aga sobiva projekt.
+* Loo grupi sisse endale piisavalt unikaalse aga sobiva nimega projekt.
 * Klooni projekt endale personaalsesse arvutisse või meie poolt antud VM-i:
 
 `git clone https://gitlab.kratt.ai/<grupp>/<projekt>.git`
@@ -98,7 +98,7 @@ Veebileheks võib olla misiganes valiidne HTML+CSS+JS kombinatsioon, aga kui end
 </html>
 ```
 
-Kindlasti ära unusta lisamast mingit ära tuntavat teksti- või koodijuppi - see on hiljem vajalik selleks, et Kubernetese klastris olevat rakendust üheselt tuvastada.
+Kindlasti ära unusta lisamast mingit ära tuntavat teksti- või koodijuppi - see on hiljem vajalik selleks, et Kubernetese klastris oleva rakenduse puhul saaksid kindel olla, et see sinu oma.
 
 Selle sisu kirjutame meie projekti kaustas faili nimega `index.html`. Seejärel tuleks luua `git commit` ja see commit `main` branchi üles lükata.
 
@@ -124,7 +124,7 @@ ADD src/index.html /app/index.html # Pane meie fail õigesse kohta
 
 Nüüd tuleb see image kokku ehitada ja käima panna. Selleks teeme järgnevalt:
 
-* `docker built . -t cicd` # Ehita praeguses kaustas oleva Dockerfile alusel kokku image nimega `cicd`
+* `docker build . -t cicd` # Ehita praeguses kaustas oleva Dockerfile alusel kokku image nimega `cicd`
 * `docker run -d -p 8080:8080 cicd` # Käivita cicd image alusel konteiner mis kuulab pordil 8080
 
 Seejärel peaks olema meie sisestatud leht kättesaadaval URL-il `http://localhost:8080`, e.g. `curl localhost:8080`.
