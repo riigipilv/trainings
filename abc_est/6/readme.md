@@ -2,6 +2,10 @@
 
 Selles ülesandes vaatame kuidas saab kasutada Kubernetese konfiguratsiooni kaarte (Config Map) ja saladusi (Secrets) selleks, et dünaamiliselt defineerida konteineri siseste keskkonna muutujate või konfiguratsioonifailide sisu ilma, et peaks konteinerit ümber ehitama. 
 
+Lisainfo Kubernetese dokumentatsioonis:
+- [Config Maps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+- [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+
 ### 1) Konfiguratsiooni kaartide loomine
 
 ```
