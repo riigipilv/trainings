@@ -3,7 +3,12 @@
 Kubernetese volüüm (Volume) teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale Pod'i kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga volüümide abil on võimalik haakida külge ka configmap'ides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
 
 Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete volüümid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
- 
+
+
+Lisainfo Kubernetese dokumentatsioonis:
+- [Kubernetes Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
+
+
 ### 1) Empty Dir tüüpi volüümid  (volumes)
 
 Liigume ülesande kausta ning vaatame **empty_dir.yaml** faili sisu: 
