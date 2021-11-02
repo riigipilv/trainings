@@ -1,6 +1,6 @@
-# Kubernetes ABC - Ülesanne 5: Andmete haldus 
+# Kubernetes ABC - Ülesanne 5: Andme volüümide (volume) haldus 
 
-Kubernetese Köide (Volume) teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale Pod'i kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga köidete abil on võimalik haakida külge ka configmap'ides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
+Kubernetese volüüm (Volume) teeb võimalikuks siduda Pod'idega püsivaid katalooge, kuhu salvestatud info säilib ka peale Pod'i kustutamist või hävimist. Enamasti kasutatakse seda näiteks andmebaaside info hoidmiseks aga volüümide abil on võimalik haakida külge ka configmap'ides defineeritud konfiguratsioonifaile. Kubernetes toetab suurt hulka erinevaid volume tüüpe näiteks NFSi, iSCSI, GlusterFS-i jpm.
 
 Selles ülesandes vaatame kuidas saab Kuberneteses hallata andmete köiteid (Volumes), et määrata, millised failid ja andmed salvestatakse väljaspool konteinereid ning kuidas sellised andmed kätte saadavaks teha üles seatud konteineritele. 
  
@@ -13,9 +13,9 @@ cd ~/5
 cat ~/5/empty_dir.yaml
 ```
 
-Selles failis on kirjeldatud juuruts ühe teenuse ja kahe Podiga. Iga Pod sisaldab kahte konteinerit ning köidet (volume) nimega **test**, mille tüübiks on **emptyDir**.
+Selles failis on kirjeldatud juuruts ühe teenuse ja kahe Podiga. Iga Pod sisaldab kahte konteinerit ning volüüm nimega **test**, mille tüübiks on **emptyDir**.
 
-Nginxi konteineris on see köide ühendatud (mounted) kausta **/usr/share/nginx/html** ja ubuntu konteineriis kausta **/busy** alla. 
+Nginxi konteineris on see volüüm ühendatud (mounted) kausta **/usr/share/nginx/html** ja ubuntu konteineriis kausta **/busy** alla. 
 Pöörake tähelepanu ubuntu podide käivituskäsule. See loob index.html faili **/busy** kausta, mis sisaldab Podi nimeruumi väärtust, Töötaja masina (Worker Node) hostinime ja Podi nime.
 
 laseme Kubernetesel selle Juurutuse tööle panna:  
@@ -61,7 +61,7 @@ curl emptydir
 ```
 
 Näete erinevaid sõnumeid olenevalt sellest, millisele Pod'ile päring saadeti.  
-EmptyDir tüüpi köide (Volume) jagatakse nginxi ja ubuntu konteinerite vahel – nii saab nginx teenindada faili index.html ja ubuntu konteiner selle sisu muuta.  
+EmptyDir tüüpi volüüm jagatakse nginxi ja ubuntu konteinerite vahel – nii saab nginx teenindada faili index.html ja ubuntu konteiner selle sisu muuta.  
 Seda ei jagata erinevate Pod'ide vahel – isegi kui need juhtuvad töötama samas Kubernetese serveris.  
 
 Kustutage esimene  emptydir pod ja uuride uuesti Pod'ide nimekirja: 
@@ -85,11 +85,11 @@ k get pods -o wide
 
 Peaksite nägema Pod'i taaskäivituste arvu suurenemist nginxi tapmise järel.
 Kui kasutate curl käsku uuesti, siisnäete, et taaskäivitatud kaustas on endiselt teie poolt muudetud sõnum.
-See näitab, et emptyDir köide (volume) elab üle konteineri taaskäivitamise. 
+See näitab, et emptyDir volüüm elab üle konteineri taaskäivitamise. 
 
 See näitab, et kui kasutate emptyDir tüüpi köiteid, sii ei tohiks eeldada, et see on konteineri käivitamisel alati tühi. 
 
-### 2) Host path tüüpi köited (volumes)
+### 2) Host path tüüpi volüümid (volumes)
 
 Vaadake järgneva juurutuse (deployment) konfiguratsiooni. 
 
@@ -105,7 +105,7 @@ k create -f host_path.yaml
 k get pods -o wide
 ```
 
-Hostpath tüüpi köide (volume) ühendatakse (mount) asukohta (gkaust või fail) otse serverist (worker node), milles vastav Pod jookseb. Kui kaks Pod'i juhtuvad olema samas severis, oleks nendel Podidel ühendatud täpselt sama väline kaust või fail.
+Hostpath tüüpi volüüme (volume) ühendatakse (mount) asukohta (gkaust või fail) otse serverist (worker node), milles vastav Pod jookseb. Kui kaks Pod'i juhtuvad olema samas severis, oleks nendel Podidel ühendatud täpselt sama väline kaust või fail.
 
 Kui Podid on püsti, kasutage mitu korda curl käsku ning uurige tulemust: 
 
@@ -126,7 +126,7 @@ k get pods -o wide
 
 Jooksutage uuesti curl käsku client Pod sees. 
 
-**Hostpath** tüüpi köidete kasutamine on lihtsaim viis andmete püsivaks salvestusek, kuna need salvestatakse väljaspool konteinereid. Samas peaksite veenduma, et Pod käivitataks alati sama Kubernetese serveri peal, et hoolitseda et see pääseb alati samadele andmetele ligi.   
+**Hostpath** tüüpi volüümide kasutamine on lihtsaim viis andmete püsivaks salvestusek, kuna need salvestatakse väljaspool konteinereid. Samas peaksite veenduma, et Pod käivitataks alati sama Kubernetese serveri peal, et hoolitseda et see pääseb alati samadele andmetele ligi.   
 Negatiivne külg on aga see, et kui server rikki läheb, siis nendele andmetele ei pruugi enam ligi pääseda. 
 
 
