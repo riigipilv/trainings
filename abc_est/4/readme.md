@@ -4,6 +4,10 @@ Vaikimisi on podid kättesaadavad vaid klastri siseselt. Kubernetese teenus (Ser
 
 Selles ülesandes vaatame kuidas Kubernetese teenuseid luua kuidas Pod'ide kuulumist teenustesse määratakse siltide (labels) panemise kaudu.  
 
+Lisainfo Kubernetese dokumentatsioonis:
+- [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+
 ### 1) Loome kaks Deployment'i ja ühe kliendi Pod'i.
 
 ```
