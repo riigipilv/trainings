@@ -93,6 +93,8 @@ Avame MariaDB konsooli:
 mysql -u root -p mydb
 ```
 
+NB! Parooliks on see väärtus, mida me varasemalt saladuste kaudu määrasime. 
+
 Ning uurime kas konfiguratsiooni kaardil seadistatud muutujad on korrektselt arvesse võetud: 
 
 ```
